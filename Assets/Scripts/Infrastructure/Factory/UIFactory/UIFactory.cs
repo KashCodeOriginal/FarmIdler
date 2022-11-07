@@ -17,31 +17,32 @@ namespace KasherOriginal.Factories.UIFactory
 
         private readonly DiContainer _container;
 
-        public GameObject LoadingGameScreen { get; private set; }
+        public GameObject MenuLoadingScreen { get; private set; }
         public GameObject MainMenuScreen { get; private set; }
+        public GameObject GameLoadingScreen { get; private set; }
         public GameObject GameplayScreen { get; private set; }
 
-        public async Task<GameObject> CreateLoadingScreen()
+        public async Task<GameObject> CreateMenuLoadingScreen()
         {
             var loadingScreenPrefab =
-                await _assetsAddressableService.GetAsset<GameObject>(AssetsAddressablesConstants.LOADING_SCREEN);
+                await _assetsAddressableService.GetAsset<GameObject>(AssetsAddressablesConstants.GAME_LOADING_SCREEN);
 
-            LoadingGameScreen = _container.InstantiatePrefab(loadingScreenPrefab);
+            MenuLoadingScreen = _container.InstantiatePrefab(loadingScreenPrefab);
 
-            return LoadingGameScreen;
+            return MenuLoadingScreen;
         }
 
-        public void DestroyLoadingScreen()
+        public void DestroyMenuLoadingScreen()
         {
-            Object.Destroy(LoadingGameScreen);
+            Object.Destroy(MenuLoadingScreen);
         }
 
         public async Task<GameObject> CreateMainMenuScreen()
         {
-            var mainMenuPrefab =
+            var mainMenuScreenPrefab =
                 await _assetsAddressableService.GetAsset<GameObject>(AssetsAddressablesConstants.MAIN_MENU_SCREEN);
 
-            MainMenuScreen = _container.InstantiatePrefab(mainMenuPrefab);
+            MainMenuScreen = _container.InstantiatePrefab(mainMenuScreenPrefab);
 
             return MainMenuScreen;
         }
@@ -49,6 +50,21 @@ namespace KasherOriginal.Factories.UIFactory
         public void DestroyMainMenuScreen()
         {
             Object.Destroy(MainMenuScreen);
+        }
+
+        public async Task<GameObject> CreateGameLoadingScreen()
+        {
+            var loadingScreenPrefab =
+                await _assetsAddressableService.GetAsset<GameObject>(AssetsAddressablesConstants.GAME_LOADING_SCREEN);
+
+            GameLoadingScreen = _container.InstantiatePrefab(loadingScreenPrefab);
+
+            return GameLoadingScreen;
+        }
+
+        public void DestroyGameLoadingScreen()
+        {
+            Object.Destroy(GameLoadingScreen);
         }
 
         public async Task<GameObject> CreateGameplayScreen()

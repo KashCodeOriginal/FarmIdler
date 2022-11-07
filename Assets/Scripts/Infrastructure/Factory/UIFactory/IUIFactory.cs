@@ -5,10 +5,12 @@ namespace KasherOriginal.Factories.UIFactory
 {
     public interface IUIFactory : IUIInfo
     {
-        public Task<GameObject> CreateLoadingScreen();
-        public void DestroyLoadingScreen();
+        public Task<GameObject> CreateMenuLoadingScreen();
+        public void DestroyMenuLoadingScreen();
         public Task<GameObject> CreateMainMenuScreen();
         public void DestroyMainMenuScreen();
+        public Task<GameObject> CreateGameLoadingScreen();
+        public void DestroyGameLoadingScreen();
         public Task<GameObject> CreateGameplayScreen();
         public void DestroyGameplayScreen();
     }
