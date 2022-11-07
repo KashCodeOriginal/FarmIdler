@@ -1,12 +1,17 @@
 using Zenject;
+using UnityEngine;
+using KasherOriginal.Settings;
 using KasherOriginal.AssetsAddressable;
 using KasherOriginal.Factories.UIFactory;
 
 public class ServiceInstaller : MonoInstaller
 {
+    [SerializeField] private GameSettings _gameSettings;
+    
     public override void InstallBindings()
     {
         BindUIFactory();
+        BindGameSettings();
         BindAbstractFactory();
         BindAssetsAddressable();
     }
@@ -24,5 +29,9 @@ public class ServiceInstaller : MonoInstaller
     private void BindAbstractFactory()
     {
         Container.BindInterfacesTo<AbstractFactory>().AsSingle();
+    }
+    private void BindGameSettings()
+    {
+        Container.Bind<GameSettings>().FromInstance(_gameSettings).AsSingle();
     }
 }

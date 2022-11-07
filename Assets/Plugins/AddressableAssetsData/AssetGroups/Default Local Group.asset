@@ -37,13 +37,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f797e92613a762e4d9fbffc24101ee1e
-    m_Address: MenuLoadingScreen
+  - m_GUID: 7b79184c567f2ee4eb99cde2bfaedbe8
+    m_Address: MainCamera
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 29804170ee33aab4d879adc7c1fa5037
     m_Address: GameLoadingScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b87a76cf430b28543a1c3de69753b32e
+    m_Address: BaseMap
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
