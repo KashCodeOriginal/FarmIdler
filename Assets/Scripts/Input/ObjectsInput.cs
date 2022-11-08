@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ObjectsInput : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class ObjectsInput : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, 100, _layerMask))
             {
-                if (hit.collider.gameObject.TryGetComponent(out IInteractable interactable))
+                if (hit.collider.gameObject.TryGetComponent(out IInteractable interactable) && !EventSystem.current.IsPointerOverGameObject())
                 {
                     interactable.Interact();
                 }

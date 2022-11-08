@@ -45,12 +45,14 @@ public class BedInstancesWatcher : IBedInstancesWatcher
         }
         else
         {
-            _uiFactory.CreatePlantInfoScreen();
+            await _uiFactory.CreatePlantInfoScreen();
         }
 
         void PlantWasChosen(BedCellType bedCellType)
         {
             bed.SetBedType(bedCellType);
+            
+            _uiFactory.DestroyPlantChooseScreen();
         }
     }
 }
