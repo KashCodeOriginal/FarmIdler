@@ -21,6 +21,8 @@ namespace KasherOriginal.Factories.UIFactory
         public GameObject MainMenuScreen { get; private set; }
         public GameObject GameLoadingScreen { get; private set; }
         public GameObject GameplayScreen { get; private set; }
+        public GameObject PlantChooseScreen { get; private set; }
+        public GameObject PlantInfoScreen { get; private set; }
 
         public async Task<GameObject> CreateMenuLoadingScreen()
         {
@@ -80,6 +82,36 @@ namespace KasherOriginal.Factories.UIFactory
         public void DestroyGameplayScreen()
         {
             Object.Destroy(GameplayScreen);
+        }
+
+        public async Task<GameObject> CreatePlantChooseScreen()
+        {
+            var plantChooseScreenPrefab =
+                await _assetsAddressableService.GetAsset<GameObject>(AssetsAddressablesConstants.PLANT_CHOOSE_SCREEN);
+
+            PlantChooseScreen = _container.InstantiatePrefab(plantChooseScreenPrefab);
+
+            return PlantChooseScreen;
+        }
+
+        public void DestroyPlantChooseScreen()
+        {
+            Object.Destroy(PlantChooseScreen);
+        }
+
+        public async Task<GameObject> CreatePlantInfoScreen()
+        {
+            var plantInfoScreenPrefab =
+                await _assetsAddressableService.GetAsset<GameObject>(AssetsAddressablesConstants.PLANT_INFO_SCREEN);
+
+            PlantInfoScreen = _container.InstantiatePrefab(plantInfoScreenPrefab);
+
+            return PlantInfoScreen;
+        }
+
+        public void DestroyPlantInfoScreen()
+        {
+            Object.Destroy(PlantInfoScreen);
         }
     }
 }

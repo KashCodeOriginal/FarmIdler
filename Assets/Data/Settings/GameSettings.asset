@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be24ef94050c0fa4e919bee374a9c478, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  _cameraInstancePosition: {x: 0, y: 0, z: 0}
+  _cameraInstancePosition: {x: 0, y: 20, z: 0}
+  _cameraInstanceRotation: {x: 0.42261827, y: 0, z: 0, w: 0.90630776}
   _baseMapPosition: {x: 0, y: 0, z: 0}
-  _targetFPS: 0
+  _targetFPS: 300

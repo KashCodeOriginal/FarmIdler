@@ -6,9 +6,9 @@ using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
 
-public class BedFabric : IBedFabric
+public class BedFactory : IBedFactory
 {
-    public BedFabric(DiContainer container, IAssetsAddressableService assetsAddressableService)
+    public BedFactory(DiContainer container, IAssetsAddressableService assetsAddressableService)
     {
         _container = container;
         _assetsAddressableService = assetsAddressableService;

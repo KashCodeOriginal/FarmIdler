@@ -7,9 +7,18 @@ public class AssetsAddressablesConstants
     public const string MAIN_MENU_SCREEN = "MainMenuScreen";
     public const string GAME_LOADING_SCREEN = "GameLoadingScreen";
     public const string GAMEPLAY_SCREEN = "GameplayScreen";
+    public const string PLANT_CHOOSE_SCREEN = "PlantChooseScreen";
+    public const string PLANT_INFO_SCREEN = "PlantInfoScreen";
+    
+    
     
     public const string BASE_MAP = "BaseMap";
     public const string MAIN_CAMERA = "MainCamera";
+    public const string BED_SPAWNER = "BedSpawner";
     
-    public const string BASE_BED = "Bed";
+    public const string BASE_BED = "BaseBed";
+    
+    public const string BASE_CARROT = "BaseCarrot";
+    public const string BASE_TREE = "BaseTree";
+    public const string BASE_GRASS = "BaseGrass";
 }

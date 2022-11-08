@@ -12,6 +12,7 @@ namespace KasherOriginal.Settings
         
         [SerializeField] private Vector3 _baseMapPosition;
         
+        
         [Space(5f)]
 
         [SerializeField] private int _targetFPS;

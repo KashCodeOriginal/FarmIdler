@@ -32,7 +32,7 @@ Transform:
   - {fileID: 6332979035001429005}
   - {fileID: 2466801719969301850}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &6564194048553816882
 Light:
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 366262313491422805}
   - component: {fileID: 5673211799185550730}
   - component: {fileID: 7383235155266390444}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

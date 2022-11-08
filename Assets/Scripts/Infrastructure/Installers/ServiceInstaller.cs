@@ -11,9 +11,11 @@ public class ServiceInstaller : MonoInstaller
     public override void InstallBindings()
     {
         BindUIFactory();
+        BindBedFactory();
         BindGameSettings();
         BindAbstractFactory();
         BindAssetsAddressable();
+        BindBedInstanceWatcher();
     }
 
     private void BindAssetsAddressable()
@@ -30,6 +32,17 @@ public class ServiceInstaller : MonoInstaller
     {
         Container.BindInterfacesTo<AbstractFactory>().AsSingle();
     }
+    
+    private void BindBedFactory()
+    {
+        Container.BindInterfacesTo<BedFactory>().AsSingle();
+    }
+    
+    private void BindBedInstanceWatcher()
+    {
+        Container.BindInterfacesTo<BedInstancesWatcher>().AsSingle();
+    }
+    
     private void BindGameSettings()
     {
         Container.Bind<GameSettings>().FromInstance(_gameSettings).AsSingle();

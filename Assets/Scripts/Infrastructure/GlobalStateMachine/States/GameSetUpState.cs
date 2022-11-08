@@ -25,9 +25,12 @@ namespace KasherOriginal.GlobalStateMachine
             var baseMapPrefab = await _assetsAddressableService.GetAsset<GameObject>(AssetsAddressablesConstants.BASE_MAP);
             var mainCameraPrefab =
                 await _assetsAddressableService.GetAsset<GameObject>(AssetsAddressablesConstants.MAIN_CAMERA);
+            var bedSpawnerPrefab =
+                await _assetsAddressableService.GetAsset<GameObject>(AssetsAddressablesConstants.BED_SPAWNER);
 
             var mapInstance = _abstractFactory.CreateInstance(baseMapPrefab, _gameSettings.BaseMapPosition);
             var cameraInstance = _abstractFactory.CreateInstance(mainCameraPrefab, _gameSettings.CameraInstancePosition);
+            var bedSpawnerInstance = _abstractFactory.CreateInstance(bedSpawnerPrefab, Vector3.zero);
 
             cameraInstance.transform.rotation = _gameSettings.CameraInstanceRotation;
         }
