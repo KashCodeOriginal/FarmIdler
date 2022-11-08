@@ -9,12 +9,11 @@ public class AssetsAddressablesConstants
     public const string GAMEPLAY_SCREEN = "GameplayScreen";
     public const string PLANT_CHOOSE_SCREEN = "PlantChooseScreen";
     public const string PLANT_INFO_SCREEN = "PlantInfoScreen";
-    
-    
-    
+
     public const string BASE_MAP = "BaseMap";
     public const string MAIN_CAMERA = "MainCamera";
     public const string BED_SPAWNER = "BedSpawner";
+    public const string BASE_FARMER = "BaseFarmer";
     
     public const string BASE_BED = "BaseBed";
     

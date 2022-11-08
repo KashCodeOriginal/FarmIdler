@@ -11,7 +11,10 @@ namespace KasherOriginal.Settings
         [Space(5f)]
         
         [SerializeField] private Vector3 _baseMapPosition;
+
+        [Space(5f)] 
         
+        [SerializeField] private Vector3 _playerSpawnPosition;
         
         [Space(5f)]
 
@@ -20,6 +23,8 @@ namespace KasherOriginal.Settings
         public Vector3 CameraInstancePosition => _cameraInstancePosition;
         public Quaternion CameraInstanceRotation => _cameraInstanceRotation;
         public Vector3 BaseMapPosition => _baseMapPosition;
+        
+        public Vector3 PlayerSpawnPosition => _playerSpawnPosition;
         
         private void OnEnable()
         {
