@@ -46,5 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rowsCount: 5
   _columnsCount: 11
+  _mapHeight: 0.5
   _distance: 7
   _centerPosition: {x: -13.5, y: 0, z: -35}

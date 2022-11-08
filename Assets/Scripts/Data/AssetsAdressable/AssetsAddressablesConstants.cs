@@ -14,6 +14,7 @@ public class AssetsAddressablesConstants
     public const string MAIN_CAMERA = "MainCamera";
     public const string BED_SPAWNER = "BedSpawner";
     public const string BASE_FARMER = "BaseFarmer";
+    public const string PATHFINDING = "Pathfinding";
     
     public const string BASE_BED = "BaseBed";
     

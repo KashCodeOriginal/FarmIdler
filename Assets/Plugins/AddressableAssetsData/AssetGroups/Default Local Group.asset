@@ -92,6 +92,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5be8fad701c30854e80611478a221222
+    m_Address: Pathfinding
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 893ee24f0156b9148aed058877eaf406, type: 2}
   m_SchemaSet:

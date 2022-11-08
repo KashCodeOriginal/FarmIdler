@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using KasherOriginal.Factories.UIFactory;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BedInstancesWatcher : IBedInstancesWatcher
 {
@@ -10,9 +11,11 @@ public class BedInstancesWatcher : IBedInstancesWatcher
         _uiFactory = uiFactory;
     }
 
+    public event UnityAction<Bed> IsBedModified;
+
     private readonly IBedFactory _bedFactory;
     private readonly IUIFactory _uiFactory;
-    
+
     private List<GameObject> _instances = new List<GameObject>();
 
     public IReadOnlyList<GameObject> Instances => _instances;
@@ -51,6 +54,8 @@ public class BedInstancesWatcher : IBedInstancesWatcher
         void PlantWasChosen(BedCellType bedCellType)
         {
             bed.SetBedType(bedCellType);
+            
+            IsBedModified?.Invoke(bed);
             
             _uiFactory.DestroyPlantChooseScreen();
         }

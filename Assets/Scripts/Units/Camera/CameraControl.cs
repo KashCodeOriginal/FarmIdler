@@ -8,7 +8,9 @@ public class CameraControl : MonoBehaviour
     [SerializeField] private float _zMax;
 
     [SerializeField] private float _speed;
-    
+
+    [SerializeField] private bool _isCameraMoving;
+
     private Vector3 _startPos;
 
     private float _targetPosX;
@@ -25,14 +27,23 @@ public class CameraControl : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            _startPos = _camera.ScreenToWorldPoint(Input.mousePosition);
+            var mousePosition = Input.mousePosition;
+
+            mousePosition.z = 10f;
+            
+            _startPos = _camera.ScreenToWorldPoint(mousePosition);
         }
+        
         else if (Input.GetMouseButton(0))
         {
-            var cameraPos = _camera.ScreenToWorldPoint(Input.mousePosition);
+            var mousePosition = Input.mousePosition;
 
-            float posX = cameraPos.x - _startPos.x;
-            float posZ = cameraPos.z - _startPos.z;
+            mousePosition.z = 10f;
+            
+            var touchPosition = _camera.ScreenToWorldPoint(mousePosition);
+
+            float posX = touchPosition.x - _startPos.x;
+            float posZ = touchPosition.y - _startPos.y;
 
             var position = transform.position;
             

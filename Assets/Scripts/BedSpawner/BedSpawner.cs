@@ -13,6 +13,8 @@ public class BedSpawner : MonoBehaviour
     [SerializeField] private int _rowsCount;
     [SerializeField] private int _columnsCount;
     
+    [SerializeField] private float _mapHeight;
+    
     [SerializeField] private float _distance;
 
     [SerializeField] private Vector3 _centerPosition;
@@ -33,11 +35,15 @@ public class BedSpawner : MonoBehaviour
             {
                 var spawnPosition = GetSpawnPosition(x, y, _distance);
 
-                var instance = await _bedFactory.CreateInstance(spawnPosition);
+                var targetSpawnPosition = new Vector3(spawnPosition.x, _mapHeight, spawnPosition.z);
+
+                var instance = await _bedFactory.CreateInstance(targetSpawnPosition);
                 
                 _bedInstancesWatcher.Register(instance);
             }
         }
+        
+        AstarPath.active.Scan();
     }
     
     Vector3 GetSpawnPosition(int row, int column, float distance)

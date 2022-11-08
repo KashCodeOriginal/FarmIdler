@@ -15,4 +15,5 @@ MonoBehaviour:
   _cameraInstancePosition: {x: 0, y: 20, z: 0}
   _cameraInstanceRotation: {x: 0.42261827, y: 0, z: 0, w: 0.90630776}
   _baseMapPosition: {x: 0, y: 0, z: 0}
+  _playerSpawnPosition: {x: 40, y: 0, z: 40}
   _targetFPS: 300
