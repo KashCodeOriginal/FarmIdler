@@ -27,9 +27,11 @@ public class Farmer : MonoBehaviour
         AddAnyTransition(moveToPoint, HasTarget);
         AddTransition(moveToPoint, plant, ReachedTarget);
         AddTransition(plant, moveToHome, NoTargets);
+        AddTransition(moveToHome, idle, ReachedHome);
 
         bool HasTarget() => _movable.MoveTargets.Count > 0;
         bool ReachedTarget() => _movable.IsTargetReached == true;
+        bool ReachedHome() => _movable.IsHomeReached == true;
         bool NoTargets() => _movable.MoveTargets.Count <= 0;
         
         _stateMachine.SetState(idle);

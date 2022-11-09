@@ -31,6 +31,7 @@ public class FarmerMovement : MonoBehaviour, IMovable
     private Transform _currentTarget;
 
     public bool IsTargetReached { get; private set; }
+    public bool IsHomeReached { get; private set; }
 
 
     public IReadOnlyList<Transform> MoveTargets
@@ -40,8 +41,10 @@ public class FarmerMovement : MonoBehaviour, IMovable
 
     private void Start()
     {
-        _positionTarget = new GameObject();
-        _positionTarget.name = "FarmerTarget";
+        _positionTarget = new GameObject
+        {
+            name = "FarmerTarget"
+        };
 
         _bedInstancesWatcher.IsBedModified += BedWasModified;
 
@@ -50,7 +53,9 @@ public class FarmerMovement : MonoBehaviour, IMovable
 
     public void MoveToPoint(AIDestinationSetter aiDestinationSetter)
     {
-        if (_targets.Count > 0 && _currentTarget == null)
+        IsHomeReached = false;
+        
+        if (_targets.Count > 0)
         {
             _currentTarget = _targets[0];
             
@@ -79,9 +84,10 @@ public class FarmerMovement : MonoBehaviour, IMovable
 
         aiDestinationSetter.target = _currentTarget;
         
-        if (Vector3.Distance(gameObject.transform.position, _positionTarget.transform.position) < _reachedPointDistance)
+        if (Vector3.Distance(gameObject.transform.position, _homePosition) < _reachedPointDistance)
         {
             _currentTarget = null;
+            IsHomeReached = true;
         }
     }
 

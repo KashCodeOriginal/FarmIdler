@@ -1935,7 +1935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1ecc5eae0604093aebe0466eb3d14b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _reachedPointDistance: 3
+  _reachedPointDistance: 2
 --- !u!114 &7050480468674772169
 MonoBehaviour:
   m_ObjectHideFlags: 0
