@@ -7,12 +7,12 @@ using KasherOriginal.Factories.UIFactory;
 public class ServiceInstaller : MonoInstaller
 {
     [SerializeField] private GameSettings _gameSettings;
-    
+
     public override void InstallBindings()
     {
+        BindSettings();
         BindUIFactory();
         BindBedFactory();
-        BindGameSettings();
         BindAbstractFactory();
         BindAssetsAddressable();
         BindBedInstanceWatcher();
@@ -43,7 +43,7 @@ public class ServiceInstaller : MonoInstaller
         Container.BindInterfacesTo<BedInstancesWatcher>().AsSingle();
     }
     
-    private void BindGameSettings()
+    private void BindSettings()
     {
         Container.Bind<GameSettings>().FromInstance(_gameSettings).AsSingle();
     }

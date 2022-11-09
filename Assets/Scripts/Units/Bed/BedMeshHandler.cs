@@ -1,52 +1,30 @@
-using System;
 using Zenject;
 using UnityEngine;
 using System.Threading.Tasks;
 using KasherOriginal.AssetsAddressable;
+using KasherOriginal.Factories.AbstractFactory;
 
 public class BedMeshHandler : MonoBehaviour
 {
     [Inject]
-    public void Construct(IAssetsAddressableService assetsAddressableService)
+    public void Construct(IAssetsAddressableService assetsAddressableService, IAbstractFactory abstractFactory)
     {
         _assetsAddressableService = assetsAddressableService;
+        _abstractFactory = abstractFactory;
     }
-    
-    [SerializeField] private MeshFilter _meshFilter;
+
+    [SerializeField] private Transform _spawnPosition;
 
     private IAssetsAddressableService _assetsAddressableService;
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            SetBedMesh(BedCellType.Carrot);
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            SetBedMesh(BedCellType.Tree);
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            SetBedMesh(BedCellType.Empty);
-        }
-        else if (Input.GetKeyDown(KeyCode.F))
-        {
-            SetBedMesh(BedCellType.Grass);
-        }
-    }
+    private IAbstractFactory _abstractFactory;
 
     public async void SetBedMesh(BedCellType bedCellType)
     {
-        var meshPrefab = await GetMeshType(bedCellType);
+        var plantPrefab = await GetMeshType(bedCellType);
 
-        if (meshPrefab != null)
-        {
-            if (meshPrefab.TryGetComponent(out MeshFilter meshFilter))
-            {
-                _meshFilter.sharedMesh = meshFilter.sharedMesh;
-            }
-        }
+        var instance = _abstractFactory.CreateInstance(plantPrefab, _spawnPosition.position);
+        
+        instance.transform.SetParent(transform);
     }
 
     private async Task<GameObject> GetMeshType(BedCellType bedCellType)

@@ -6,13 +6,13 @@ using KasherOriginal.Factories.AbstractFactory;
 
 public class GameInstance
 {
-    public GameInstance(IUIFactory uiFactory, IAssetsAddressableService assetsAddressableService, IAbstractFactory abstractFactory, GameSettings gameSettings)
+    public GameInstance(IUIFactory uiFactory, IAssetsAddressableService assetsAddressableService, IAbstractFactory abstractFactory, GameSettings gameSettings, IBedInstancesWatcher bedInstancesWatcher)
     {
         StateMachine = new StateMachine<GameInstance>(this, new BootstrapState(this),
             new SceneLoadingState(this, uiFactory),
             new MainMenuState(this, uiFactory),
             new GameLoadingState(this, uiFactory),
-            new GameSetUpState(this, abstractFactory, assetsAddressableService, gameSettings),
+            new GameSetUpState(this, abstractFactory, assetsAddressableService, gameSettings, bedInstancesWatcher),
             new GameplayState(this, uiFactory)
             );
         

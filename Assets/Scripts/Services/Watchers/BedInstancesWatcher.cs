@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using KasherOriginal.Factories.UIFactory;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
+using System.Collections.Generic;
+using KasherOriginal.Factories.UIFactory;
 
 public class BedInstancesWatcher : IBedInstancesWatcher
 {
@@ -18,7 +18,19 @@ public class BedInstancesWatcher : IBedInstancesWatcher
 
     private List<GameObject> _instances = new List<GameObject>();
 
+    private GameObject _playerInstance;
+
     public IReadOnlyList<GameObject> Instances => _instances;
+
+    public void SetUp(GameObject playerInstance)
+    {
+        _playerInstance = playerInstance;
+
+        if (_playerInstance.TryGetComponent(out IMovable movable))
+        {
+            movable.IsBedVisited += SetBedModel;
+        }
+    }
 
     public void Register(GameObject bedInstance)
     {
@@ -58,6 +70,14 @@ public class BedInstancesWatcher : IBedInstancesWatcher
             IsBedModified?.Invoke(bed);
             
             _uiFactory.DestroyPlantChooseScreen();
+        }
+    }
+
+    private void SetBedModel(GameObject bedInstance)
+    {
+        if (bedInstance.TryGetComponent(out Bed bed))
+        {
+            bed.SetBedMesh();
         }
     }
 }

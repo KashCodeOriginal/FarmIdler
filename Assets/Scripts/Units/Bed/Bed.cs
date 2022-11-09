@@ -16,7 +16,10 @@ public class Bed : MonoBehaviour
     public void SetBedType(BedCellType bedCellType)
     {
         _bedCellType = bedCellType;
-        
+    }
+
+    public void SetBedMesh()
+    {
         _bedMeshHandler.SetBedMesh(_bedCellType);
     }
 }

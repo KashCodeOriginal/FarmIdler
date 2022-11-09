@@ -7,16 +7,18 @@ namespace KasherOriginal.GlobalStateMachine
 {
     public class GameSetUpState : State<GameInstance>
     {
-        public GameSetUpState(GameInstance context, IAbstractFactory abstractFactory, IAssetsAddressableService assetsAddressableService, GameSettings gameSettings) : base(context)
+        public GameSetUpState(GameInstance context, IAbstractFactory abstractFactory, IAssetsAddressableService assetsAddressableService, GameSettings gameSettings, IBedInstancesWatcher bedInstancesWatcher) : base(context)
         {
             _abstractFactory = abstractFactory;
             _assetsAddressableService = assetsAddressableService;
             _gameSettings = gameSettings;
+            _bedInstancesWatcher = bedInstancesWatcher;
         }
 
         private readonly IAbstractFactory _abstractFactory;
         private readonly IAssetsAddressableService _assetsAddressableService;
         private readonly GameSettings _gameSettings;
+        private readonly IBedInstancesWatcher _bedInstancesWatcher;
 
         public override async void Enter()
         {
@@ -37,6 +39,7 @@ namespace KasherOriginal.GlobalStateMachine
             var pathfindingInstance = _abstractFactory.CreateInstance(pathfindingPrefab,  _gameSettings.BaseMapPosition);
 
             cameraInstance.transform.rotation = _gameSettings.CameraInstanceRotation;
+            _bedInstancesWatcher.SetUp(farmerInstance);
         }
     }
 }

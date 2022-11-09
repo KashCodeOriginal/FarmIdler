@@ -1829,6 +1829,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4407643873775758586}
+  - component: {fileID: -9065413033808303475}
   - component: {fileID: 6135678683084700993}
   - component: {fileID: 6097151270384660731}
   - component: {fileID: 2803406023468841208}
@@ -1837,7 +1838,7 @@ GameObject:
   - component: {fileID: 890529725614206554}
   - component: {fileID: 1614288678293994289}
   - component: {fileID: 5822173760730114957}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Farmer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1860,6 +1861,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &-9065413033808303475
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6504860606175217925}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 5ad20ef734769b344a01cde65c49397f, type: 3}
+  m_Controller: {fileID: 9100000, guid: ffc62f0c42d6a054eb46b12c7fe0876a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!136 &6135678683084700993
 CapsuleCollider:
   m_ObjectHideFlags: 0
