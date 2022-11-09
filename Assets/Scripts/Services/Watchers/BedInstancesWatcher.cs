@@ -60,7 +60,23 @@ public class BedInstancesWatcher : IBedInstancesWatcher
         }
         else
         {
-            await _uiFactory.CreatePlantInfoScreen();
+            var plantInfoScreenInstance =  await _uiFactory.CreatePlantInfoScreen();
+
+            if (plantInfoScreenInstance.TryGetComponent(out PlantInfoScreen plantInfoScreen))
+            {
+                plantInfoScreen.IsCollectButtonClicked += PlantWasCollected;
+            }
+
+            var plantsGrowing = bed.GetComponentInChildren<PlantsGrowing>();
+
+            if (plantsGrowing.WasPlantGrown)
+            {
+                plantInfoScreen.MakeButtonInteractable();
+            }
+            else
+            {
+                plantInfoScreen.MakeButtonUnInteractable();
+            }
         }
 
         void PlantWasChosen(BedCellType bedCellType)
@@ -70,6 +86,12 @@ public class BedInstancesWatcher : IBedInstancesWatcher
             IsBedModified?.Invoke(bed);
             
             _uiFactory.DestroyPlantChooseScreen();
+        }
+
+        void PlantWasCollected()
+        {
+            bed.SetBedType(BedCellType.Empty);
+            bed.SetBedMesh();
         }
     }
 

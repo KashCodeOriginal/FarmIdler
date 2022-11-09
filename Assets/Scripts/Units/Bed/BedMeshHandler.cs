@@ -15,6 +15,8 @@ public class BedMeshHandler : MonoBehaviour
 
     [SerializeField] private Transform _spawnPosition;
 
+    private GameObject _currentPlant;
+
     private IAssetsAddressableService _assetsAddressableService;
     private IAbstractFactory _abstractFactory;
 
@@ -22,9 +24,12 @@ public class BedMeshHandler : MonoBehaviour
     {
         var plantPrefab = await GetMeshType(bedCellType);
 
-        var instance = _abstractFactory.CreateInstance(plantPrefab, _spawnPosition.position);
+        if (plantPrefab != null)
+        {
+            _currentPlant = _abstractFactory.CreateInstance(plantPrefab, _spawnPosition.position);
         
-        instance.transform.SetParent(transform);
+            _currentPlant.transform.SetParent(transform);
+        }
     }
 
     private async Task<GameObject> GetMeshType(BedCellType bedCellType)
@@ -32,6 +37,10 @@ public class BedMeshHandler : MonoBehaviour
         switch (bedCellType)
         {
             case BedCellType.Empty:
+                if (_currentPlant != null)
+                {
+                    Destroy(_currentPlant);
+                }
                 return null;
             case BedCellType.Carrot:
                 var carrotPrefab = await GetAssetByPath(AssetsAddressablesConstants.BASE_CARROT);

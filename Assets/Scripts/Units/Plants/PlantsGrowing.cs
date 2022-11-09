@@ -5,23 +5,24 @@ public class PlantsGrowing : MonoBehaviour
 {
     [SerializeField] private float _timeBetweenStages;
     
-    private List<GameObject> _stages = new List<GameObject>();
+    [SerializeField] private List<GameObject> _stages = new List<GameObject>();
     
     private float _currentStageTime = 0;
     
     private int _currentStage = 0;
-    
-    public int CurrentStage => _currentStage;
 
-    public float CurrentStageTime => _currentStageTime;
+    private bool _canGrow = true;
+    
+    private bool _wasPlantGrown = false;
+
+    public float TimeBetweenStages => _timeBetweenStages;
+
+    public List<GameObject> Stages => _stages;
+    
+    public bool WasPlantGrown => _wasPlantGrown;
 
     private void Start()
     {
-        for (int i = 0; i < gameObject.transform.childCount; i++)
-        {
-            _stages.Add(gameObject.transform.GetChild(i).gameObject);
-        }
-        
         SetStage(_currentStage);
     }
     
@@ -39,16 +40,25 @@ public class PlantsGrowing : MonoBehaviour
 
     private void Update()
     {
-        if (_currentStage < _stages.Count - 1)
+        if (_canGrow)
         {
-            _currentStageTime += Time.deltaTime;
-
-            if (_currentStageTime >= _timeBetweenStages)
+            if (_currentStage < _stages.Count - 1)
             {
-                _currentStageTime = 0;
-                _currentStage++;
-                SetStage(_currentStage);
+                _currentStageTime += Time.deltaTime;
+
+                if (_currentStageTime >= _timeBetweenStages)
+                {
+                    _currentStageTime = 0;
+                    _currentStage++;
+                    SetStage(_currentStage);
+                }
+            }
+            else
+            {
+                _canGrow = false;
+                _wasPlantGrown = true;
             }
         }
+        
     }
 }
