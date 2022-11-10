@@ -23,6 +23,7 @@ public class PlantsGrowing : MonoBehaviour
 
     private void Start()
     {
+        _wasPlantGrown = false;
         SetStage(_currentStage);
     }
     

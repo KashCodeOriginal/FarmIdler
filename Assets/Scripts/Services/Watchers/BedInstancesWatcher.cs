@@ -80,7 +80,7 @@ public class BedInstancesWatcher : IBedInstancesWatcher
             if (bed.GetComponentInChildren<PlantsGrowing>())
             {
                 var plantsGrowing = bed.GetComponentInChildren<PlantsGrowing>();
-
+                
                 if (plantsGrowing.WasPlantGrown && bed.BedCellType != BedCellType.Tree)
                 {
                     plantInfoScreen.MakeButtonInteractable();

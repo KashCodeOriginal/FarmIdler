@@ -15,6 +15,8 @@ namespace KasherOriginal.GlobalStateMachine
 
         public override void Enter()
         {
+            _uiFactory.DestroyMenuLoadingScreen();
+            
             ShowUI();
         }
 

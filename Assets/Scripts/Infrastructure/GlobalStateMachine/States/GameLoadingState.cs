@@ -28,22 +28,13 @@ namespace KasherOriginal.GlobalStateMachine
 
             OnLoadComplete();
         }
-
-        public override void Exit()
-        {
-            HideUI();
-        }
+        
 
         private void ShowUI()
         {
             _uiFactory.CreateGameLoadingScreen();
         }
-
-        private void HideUI()
-        {
-            _uiFactory.DestroyGameLoadingScreen();
-        }
-
+        
         private void OnLoadComplete()
         {
             Context.StateMachine.SwitchState<GameSetUpState, MainMenuScreen>(_mainMenuScreen);

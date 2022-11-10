@@ -22,19 +22,9 @@ namespace KasherOriginal.GlobalStateMachine
             OnLoadComplete();
         }
 
-        public override void Exit()
-        {
-            HideUI();
-        }
-
         private void ShowUI()
         {
             _uiFactory.CreateMenuLoadingScreen();
-        }
-        
-        private void HideUI()
-        {
-            _uiFactory.DestroyMenuLoadingScreen();
         }
 
         private void OnLoadComplete()
