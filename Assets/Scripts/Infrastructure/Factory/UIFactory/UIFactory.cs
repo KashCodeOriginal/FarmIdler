@@ -20,6 +20,7 @@ namespace KasherOriginal.Factories.UIFactory
         public GameObject MenuLoadingScreen { get; private set; }
         public GameObject MainMenuScreen { get; private set; }
         public GameObject GameLoadingScreen { get; private set; }
+        public GameObject GameLoadingScreenSecond { get; private set; }
         public GameObject GameplayScreen { get; private set; }
         public GameObject PlantChooseScreen { get; private set; }
         public GameObject PlantInfoScreen { get; private set; }
@@ -57,7 +58,7 @@ namespace KasherOriginal.Factories.UIFactory
         public async Task<GameObject> CreateGameLoadingScreen()
         {
             var loadingScreenPrefab =
-                await _assetsAddressableService.GetAsset<GameObject>(AssetsAddressablesConstants.GAME_LOADING_SCREEN);
+                await _assetsAddressableService.GetAsset<GameObject>(AssetsAddressablesConstants.GAME_LOADING_SCREEN_SECOND);
 
             GameLoadingScreen = _container.InstantiatePrefab(loadingScreenPrefab);
 

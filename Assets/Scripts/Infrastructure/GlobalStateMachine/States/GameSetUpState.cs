@@ -22,8 +22,6 @@ namespace KasherOriginal.GlobalStateMachine
 
         public override async void Enter(MainMenuScreen mainMenuScreen)
         {
-            Context.StateMachine.SwitchState<GameplayState>();
-
             var baseMapPrefab = await _assetsAddressableService.GetAsset<GameObject>(AssetsAddressablesConstants.BASE_MAP);
             var mainCameraPrefab =
                 await _assetsAddressableService.GetAsset<GameObject>(AssetsAddressablesConstants.MAIN_CAMERA);
@@ -46,6 +44,8 @@ namespace KasherOriginal.GlobalStateMachine
                 bedSpawner.SetUp(mainMenuScreen);
                 bedSpawner.CreateBeds();
             }
+
+            Context.StateMachine.SwitchState<GameplayState, GameObject>(farmerInstance);
         }
     }
 }

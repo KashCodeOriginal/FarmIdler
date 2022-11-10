@@ -6,6 +6,7 @@ public class AssetsAddressablesConstants
     
     public const string MAIN_MENU_SCREEN = "MainMenuScreen";
     public const string GAME_LOADING_SCREEN = "GameLoadingScreen";
+    public const string GAME_LOADING_SCREEN_SECOND = "GameLoadingScreenSecond";
     public const string GAMEPLAY_SCREEN = "GameplayScreen";
     public const string PLANT_CHOOSE_SCREEN = "PlantChooseScreen";
     public const string PLANT_INFO_SCREEN = "PlantInfoScreen";

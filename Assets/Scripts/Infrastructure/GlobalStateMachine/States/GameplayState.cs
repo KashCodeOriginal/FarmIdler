@@ -1,8 +1,9 @@
 using KasherOriginal.Factories.UIFactory;
+using UnityEngine;
 
 namespace KasherOriginal.GlobalStateMachine
 {
-    public class GameplayState : State<GameInstance>
+    public class GameplayState : StateOneParam<GameInstance, GameObject>
     {
         public GameplayState(GameInstance context, IUIFactory uiFactory) : base(context)
         {
@@ -10,10 +11,20 @@ namespace KasherOriginal.GlobalStateMachine
         }
 
         private readonly IUIFactory _uiFactory;
+        private GameObject _gameplayScreenInstance;
 
-        public override void Enter()
+        public override async void Enter(GameObject farmerInstance)
         {
             _uiFactory.DestroyGameLoadingScreen();
+
+            _gameplayScreenInstance = await _uiFactory.CreateGameplayScreen();
+
+            if (_gameplayScreenInstance.TryGetComponent(out GameplayScreen gameplayScreen))
+            {
+                var farmerExperience = farmerInstance.GetComponent<FarmerExperience>();
+                var farmerInventory = farmerInstance.GetComponent<FarmerInventory>();
+                gameplayScreen.SetUp(farmerExperience, farmerInventory);
+            }
         }
     }
 }

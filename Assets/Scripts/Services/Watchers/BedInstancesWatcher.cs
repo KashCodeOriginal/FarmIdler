@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 using KasherOriginal.Settings;
 using System.Collections.Generic;
 using KasherOriginal.Factories.UIFactory;
+using Random = UnityEngine.Random;
 
 public class BedInstancesWatcher : IBedInstancesWatcher
 {
@@ -10,6 +12,7 @@ public class BedInstancesWatcher : IBedInstancesWatcher
     {
         _bedFactory = bedFactory;
         _uiFactory = uiFactory;
+        _plantSettings = plantSettings;
     }
 
     public event UnityAction<Bed> IsBedModified;
@@ -20,6 +23,8 @@ public class BedInstancesWatcher : IBedInstancesWatcher
     private List<GameObject> _instances = new List<GameObject>();
 
     private GameObject _playerInstance;
+
+    private PlantSettings _plantSettings;
 
     public IReadOnlyList<GameObject> Instances => _instances;
 
@@ -70,8 +75,6 @@ public class BedInstancesWatcher : IBedInstancesWatcher
                 var plantImage = bed.GetPlantImage();
                 
                 plantInfoScreen.SetPlantInfo(bed.BedCellType.ToString(), plantImage);
-                
-                
             }
 
             if (bed.GetComponentInChildren<PlantsGrowing>())
@@ -100,6 +103,19 @@ public class BedInstancesWatcher : IBedInstancesWatcher
 
         void PlantWasCollected()
         {
+            if (_playerInstance.TryGetComponent(out FarmerExperience farmerExperience))
+            {
+                farmerExperience.AddExperience(GetExperienceByBedType(bed.BedCellType));
+            }
+
+            if (bed.BedCellType == BedCellType.Carrot)
+            {
+                if (_playerInstance.TryGetComponent(out FarmerInventory farmerInventory))
+                {
+                    farmerInventory.AddCarrot(Random.Range(1, 3));
+                }
+            }
+            
             bed.SetBedType(BedCellType.Empty);
             bed.SetBedMesh();
         }
@@ -111,5 +127,18 @@ public class BedInstancesWatcher : IBedInstancesWatcher
         {
             bed.SetBedMesh();
         }
+    }
+
+    private int GetExperienceByBedType(BedCellType bedCellType)
+    {
+        switch (bedCellType)
+        {
+            case BedCellType.Carrot:
+                return _plantSettings.CarrotCollectExperience;
+            case BedCellType.Grass:
+                return _plantSettings.GrassCollectExperience;
+        }
+
+        return 0;
     }
 }
