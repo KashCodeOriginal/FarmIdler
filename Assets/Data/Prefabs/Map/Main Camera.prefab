@@ -98,11 +98,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b8127ffb3aca5647852ab9523f4e422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _xMin: -100
-  _xMax: 100
-  _zMin: -100
-  _zMax: 100
+  _xMin: -60
+  _xMax: 50
+  _zMin: -60
+  _zMax: 20
   _speed: 5
+  _isCameraMoving: 0
 --- !u!114 &1866990689039476803
 MonoBehaviour:
   m_ObjectHideFlags: 0

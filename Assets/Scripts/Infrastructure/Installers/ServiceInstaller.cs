@@ -7,6 +7,7 @@ using KasherOriginal.Factories.UIFactory;
 public class ServiceInstaller : MonoInstaller
 {
     [SerializeField] private GameSettings _gameSettings;
+    [SerializeField] private PlantSettings _plantSettings;
 
     public override void InstallBindings()
     {
@@ -46,5 +47,6 @@ public class ServiceInstaller : MonoInstaller
     private void BindSettings()
     {
         Container.Bind<GameSettings>().FromInstance(_gameSettings).AsSingle();
+        Container.Bind<PlantSettings>().FromInstance(_plantSettings).AsSingle();
     }
 }

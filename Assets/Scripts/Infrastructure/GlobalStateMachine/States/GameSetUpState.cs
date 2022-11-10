@@ -5,7 +5,7 @@ using KasherOriginal.Factories.AbstractFactory;
 
 namespace KasherOriginal.GlobalStateMachine
 {
-    public class GameSetUpState : State<GameInstance>
+    public class GameSetUpState : StateOneParam<GameInstance, MainMenuScreen>
     {
         public GameSetUpState(GameInstance context, IAbstractFactory abstractFactory, IAssetsAddressableService assetsAddressableService, GameSettings gameSettings, IBedInstancesWatcher bedInstancesWatcher) : base(context)
         {
@@ -20,7 +20,7 @@ namespace KasherOriginal.GlobalStateMachine
         private readonly GameSettings _gameSettings;
         private readonly IBedInstancesWatcher _bedInstancesWatcher;
 
-        public override async void Enter()
+        public override async void Enter(MainMenuScreen mainMenuScreen)
         {
             Context.StateMachine.SwitchState<GameplayState>();
 
@@ -40,6 +40,12 @@ namespace KasherOriginal.GlobalStateMachine
 
             cameraInstance.transform.rotation = _gameSettings.CameraInstanceRotation;
             _bedInstancesWatcher.SetUp(farmerInstance);
+
+            if (bedSpawnerInstance.TryGetComponent(out BedSpawner bedSpawner))
+            {
+                bedSpawner.SetUp(mainMenuScreen);
+                bedSpawner.CreateBeds();
+            }
         }
     }
 }

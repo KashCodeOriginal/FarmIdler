@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using KasherOriginal.Settings;
 using System.Collections.Generic;
 using KasherOriginal.Factories.UIFactory;
 
 public class BedInstancesWatcher : IBedInstancesWatcher
 {
-    public BedInstancesWatcher(IBedFactory bedFactory, IUIFactory uiFactory)
+    public BedInstancesWatcher(IBedFactory bedFactory, IUIFactory uiFactory, PlantSettings plantSettings)
     {
         _bedFactory = bedFactory;
         _uiFactory = uiFactory;
@@ -65,17 +66,26 @@ public class BedInstancesWatcher : IBedInstancesWatcher
             if (plantInfoScreenInstance.TryGetComponent(out PlantInfoScreen plantInfoScreen))
             {
                 plantInfoScreen.IsCollectButtonClicked += PlantWasCollected;
+
+                var plantImage = bed.GetPlantImage();
+                
+                plantInfoScreen.SetPlantInfo(bed.BedCellType.ToString(), plantImage);
+                
+                
             }
 
-            var plantsGrowing = bed.GetComponentInChildren<PlantsGrowing>();
+            if (bed.GetComponentInChildren<PlantsGrowing>())
+            {
+                var plantsGrowing = bed.GetComponentInChildren<PlantsGrowing>();
 
-            if (plantsGrowing.WasPlantGrown)
-            {
-                plantInfoScreen.MakeButtonInteractable();
-            }
-            else
-            {
-                plantInfoScreen.MakeButtonUnInteractable();
+                if (plantsGrowing.WasPlantGrown && bed.BedCellType != BedCellType.Tree)
+                {
+                    plantInfoScreen.MakeButtonInteractable();
+                }
+                else
+                {
+                    plantInfoScreen.MakeButtonUnInteractable();
+                }
             }
         }
 

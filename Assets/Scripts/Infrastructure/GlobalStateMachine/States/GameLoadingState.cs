@@ -4,7 +4,7 @@ using KasherOriginal.Factories.UIFactory;
 
 namespace KasherOriginal.GlobalStateMachine
 {
-    public class GameLoadingState : State<GameInstance>
+    public class GameLoadingState : StateOneParam<GameInstance, MainMenuScreen>
     {
         public GameLoadingState(GameInstance context, IUIFactory uiFactory) : base(context)
         {
@@ -15,8 +15,12 @@ namespace KasherOriginal.GlobalStateMachine
 
         private GameObject GameLoadingScreenInstance;
 
-        public override async void Enter()
+        private MainMenuScreen _mainMenuScreen;
+
+        public override async void Enter(MainMenuScreen mainMenuScreen)
         {
+            _mainMenuScreen = mainMenuScreen;
+            
             ShowUI();
             
             var asyncOperationHandle = Addressables.LoadSceneAsync(AssetsAddressablesConstants.GAMEPLAY_LEVEL_NAME);
@@ -32,7 +36,7 @@ namespace KasherOriginal.GlobalStateMachine
 
         private void OnLoadComplete()
         {
-            Context.StateMachine.SwitchState<GameSetUpState>();
+            Context.StateMachine.SwitchState<GameSetUpState, MainMenuScreen>(_mainMenuScreen);
         }
     }
 }

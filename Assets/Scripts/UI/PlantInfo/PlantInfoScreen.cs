@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using KasherOriginal.Factories.UIFactory;
+using TMPro;
 
 public class PlantInfoScreen : MonoBehaviour
 {
@@ -14,12 +15,18 @@ public class PlantInfoScreen : MonoBehaviour
 
     public event UnityAction IsCollectButtonClicked;
 
-    private IUIFactory _uiFactory;
-    
     [SerializeField] private Button _closePanelButton;
     [SerializeField] private Button _closePanelBackgroundButton;
     
+    [SerializeField] private TextMeshProUGUI _infoPanelPlantName;
+    
     [SerializeField] private Button _collectButton;
+    [SerializeField] private GameObject _collectButtonInstance;
+
+    [SerializeField] private Image _plantImage;
+    
+    private IUIFactory _uiFactory;
+
 
     private void Start()
     {
@@ -31,12 +38,18 @@ public class PlantInfoScreen : MonoBehaviour
 
     public void MakeButtonInteractable()
     {
-        _collectButton.interactable = true;
+        _collectButtonInstance.SetActive(true);
     }
     
     public void MakeButtonUnInteractable()
     {
-        _collectButton.interactable = false;
+        _collectButtonInstance.SetActive(false);
+    }
+
+    public void SetPlantInfo(string plantName, Sprite image)
+    {
+        _infoPanelPlantName.text = plantName;
+        _plantImage.sprite = image;
     }
     
     private void DestroyScreen()

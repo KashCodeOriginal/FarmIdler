@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameSettings: {fileID: 11400000, guid: 6c39be994d862bd4a96b685e52c59b6a, type: 2}
+  _plantSettings: {fileID: 11400000, guid: f6b1c3f531de9ab46aa02058f455886b, type: 2}
 --- !u!1 &7447718426861636911
 GameObject:
   m_ObjectHideFlags: 0

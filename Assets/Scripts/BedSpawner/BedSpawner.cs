@@ -9,29 +9,30 @@ public class BedSpawner : MonoBehaviour
         _bedFactory = bedFactory;
         _bedInstancesWatcher = bedInstancesWatcher;
     }
-
-    [SerializeField] private int _rowsCount;
-    [SerializeField] private int _columnsCount;
     
-    [SerializeField] private float _mapHeight;
+    private float _mapHeight = 0.3f;
     
-    [SerializeField] private float _distance;
+    private float _distance = 5f;
 
-    [SerializeField] private Vector3 _centerPosition;
+    private Vector3 _centerPosition;
 
     private IBedFactory _bedFactory;
     private IBedInstancesWatcher _bedInstancesWatcher;
 
-    private void Start()
+    private MainMenuScreen _mainMenuScreen;
+
+    public void SetUp(MainMenuScreen mainMenuScreen)
     {
-        CreateBeds();
+        _mainMenuScreen = mainMenuScreen;
     }
 
-    private async void CreateBeds()
+    public async void CreateBeds()
     {
-        for (int x = 0; x < _rowsCount; x++)
+        _centerPosition = new Vector3(_mainMenuScreen.RowsValue * -2.2f, _mapHeight, _mainMenuScreen.ColumnsValue * -2.8f);
+        
+        for (int x = 0; x < _mainMenuScreen.RowsValue; x++)
         {
-            for (int y = 0; y < _columnsCount; y++)
+            for (int y = 0; y < _mainMenuScreen.ColumnsValue; y++)
             {
                 var spawnPosition = GetSpawnPosition(x, y, _distance);
 

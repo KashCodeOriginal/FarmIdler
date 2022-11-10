@@ -9,8 +9,6 @@ public class CameraControl : MonoBehaviour
 
     [SerializeField] private float _speed;
 
-    [SerializeField] private bool _isCameraMoving;
-
     private Vector3 _startPos;
 
     private float _targetPosX;

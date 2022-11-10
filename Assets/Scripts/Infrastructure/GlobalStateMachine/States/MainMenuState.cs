@@ -11,7 +11,7 @@ namespace KasherOriginal.GlobalStateMachine
 
         private readonly IUIFactory _uiFactory;
 
-        private MainMenuScreen MainMenuScreen;
+        private MainMenuScreen _mainMenuScreen;
 
         public override void Enter()
         {
@@ -29,16 +29,16 @@ namespace KasherOriginal.GlobalStateMachine
 
             if (mainMenuScreenInstance.TryGetComponent(out MainMenuScreen mainMenuScreen))
             {
-                MainMenuScreen = mainMenuScreen;
+                _mainMenuScreen = mainMenuScreen;
 
-                MainMenuScreen.OnPlayButtonClicked += ChangeStateToGameplay;
+                _mainMenuScreen.OnPlayButtonClicked += ChangeStateToGameplay;
             }
         }
         private void HideUI()
         {
-            if (MainMenuScreen != null)
+            if (_mainMenuScreen != null)
             {
-                MainMenuScreen.OnPlayButtonClicked -= ChangeStateToGameplay;
+                _mainMenuScreen.OnPlayButtonClicked -= ChangeStateToGameplay;
             }
             
             _uiFactory.DestroyMainMenuScreen();
@@ -46,7 +46,7 @@ namespace KasherOriginal.GlobalStateMachine
 
         private void ChangeStateToGameplay()
         {
-           Context.StateMachine.SwitchState<GameLoadingState>(); 
+           Context.StateMachine.SwitchState<GameLoadingState, MainMenuScreen>(_mainMenuScreen); 
         }
     }
 }

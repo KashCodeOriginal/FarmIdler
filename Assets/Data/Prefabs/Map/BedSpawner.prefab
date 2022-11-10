@@ -44,8 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f8ebf17a665854ca582700f5338915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rowsCount: 5
-  _columnsCount: 11
-  _mapHeight: 0.5
+  _rowsCount: 1
+  _columnsCount: 1
+  _mapHeight: 0.3
   _distance: 5
-  _centerPosition: {x: -13.5, y: 0, z: -35}
