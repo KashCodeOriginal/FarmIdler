@@ -15,9 +15,6 @@ namespace KasherOriginal.GlobalStateMachine
 
         public override async void Enter(GameObject farmerInstance)
         {
-            _uiFactory.DestroyMenuLoadingScreen();
-            _uiFactory.DestroyGameLoadingScreen();
-
             _gameplayScreenInstance = await _uiFactory.CreateGameplayScreen();
 
             if (_gameplayScreenInstance.TryGetComponent(out GameplayScreen gameplayScreen))
@@ -26,6 +23,9 @@ namespace KasherOriginal.GlobalStateMachine
                 var farmerInventory = farmerInstance.GetComponent<FarmerInventory>();
                 gameplayScreen.SetUp(farmerExperience, farmerInventory);
             }
+
+            _uiFactory.DestroyMenuLoadingScreen();
+            _uiFactory.DestroyGameLoadingScreen();
         }
     }
 }
