@@ -13,7 +13,7 @@ namespace Editor
             var report = BuildPlayer(
                 new BuildPlayerOptions {
             target = BuildTarget.Android,
-            locationPathName = "C:/Users/Lindf/Documents/GitHub/TestTaskForLavaProject/Build/Build.apk",
+            locationPathName = "C:/Users/Lindf/Documents/GitHub/TestTaskForLavaProject/artifacts/Build.apk",
             scenes = new []{"Assets/Scenes/Bootstrap.unity"}
                 });
             
