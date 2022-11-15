@@ -40,14 +40,11 @@ SpriteAtlas:
       allowAlphaSplitting: 0
       enableRotation: 1
       enableTightPacking: 0
-      enableAlphaDilation: 0
-    secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 0490c2a3a63a14f019048386031255f0, type: 3}
+    totalSpriteSurfaceArea: 2392429
     bindAsDefault: 1
-    isAtlasV2: 0
-    cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 96ff8090ed400444ca45e8ef17e76f0c, type: 3}
@@ -137,6 +134,5 @@ SpriteAtlas:
   - character_select_icon_add
   - character_sample_9
   - character_select_frame_focus
-  m_RenderDataMap: {}
   m_Tag: Character_List_Select
   m_IsVariant: 0
