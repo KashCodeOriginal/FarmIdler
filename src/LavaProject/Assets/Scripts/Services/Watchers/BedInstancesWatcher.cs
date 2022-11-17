@@ -50,11 +50,20 @@ public class BedInstancesWatcher : IBedInstancesWatcher
         _bedFactory.DestroyAllInstances();
     }
 
-    private async void BedWasInteracted(Bed bed)
+    private void BedWasInteracted(Bed bed)
     {
         BedCellStaticData bedCellStaticData = bed.BedCellStaticSata;
         
         if (bedCellStaticData == null)
+        {
+            CreateChooseScreen();
+        }
+        else
+        {
+            CreateInfoScreen();
+        }
+        
+        async void CreateChooseScreen()
         {
             var plantChooseScreenInstance = await  _uiFactory.CreatePlantChooseScreen();
 
@@ -63,7 +72,8 @@ public class BedInstancesWatcher : IBedInstancesWatcher
                 plantChooseScreen.IsChooseButtonClicked += PlantWasChosen;
             }
         }
-        else
+
+        async void CreateInfoScreen()
         {
             var plantInfoScreenInstance =  await _uiFactory.CreatePlantInfoScreen();
 
@@ -115,7 +125,7 @@ public class BedInstancesWatcher : IBedInstancesWatcher
                 }
             }
             
-            bed.SetBedType(null);
+            bed.ResetBedMesh();
         }
     }
 

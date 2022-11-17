@@ -1,7 +1,5 @@
 using Zenject;
 using UnityEngine;
-using System.Threading.Tasks;
-using KasherOriginal.AssetsAddressable;
 using KasherOriginal.Factories.AbstractFactory;
 
 public class BedMeshHandler : MonoBehaviour
@@ -20,6 +18,12 @@ public class BedMeshHandler : MonoBehaviour
 
     public void SetBedMesh(BedCellStaticData bedCellStaticData)
     {
+        if (bedCellStaticData == null)
+        {
+            Destroy(_currentPlant);
+            return;
+        }
+        
         var plantPrefab = bedCellStaticData.Prefab;
 
         if (plantPrefab != null)

@@ -22,4 +22,10 @@ public class Bed : MonoBehaviour
     {
         _bedMeshHandler.SetBedMesh(BedCellStaticSata);
     }
+
+    public void ResetBedMesh()
+    {
+        SetBedType(null);
+        _bedMeshHandler.SetBedMesh(_bedCellStaticSata);
+    }
 }
