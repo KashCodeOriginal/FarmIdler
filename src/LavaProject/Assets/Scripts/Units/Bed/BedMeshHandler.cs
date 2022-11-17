@@ -27,6 +27,16 @@ public class BedMeshHandler : MonoBehaviour
             _currentPlant = _abstractFactory.CreateInstance(plantPrefab, _spawnPosition.position);
         
             _currentPlant.transform.SetParent(transform);
+            
+            SetGrowingTime(_currentPlant, bedCellStaticData.TimeBetweenGrowingStages);
+        }
+    }
+
+    private void SetGrowingTime(GameObject plant, int time)
+    {
+        if (plant.TryGetComponent(out PlantsGrowing plantsGrowing))
+        {
+            plantsGrowing.SetStageTime(time);
         }
     }
 }

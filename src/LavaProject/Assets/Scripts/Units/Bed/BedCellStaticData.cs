@@ -8,6 +8,8 @@ public class BedCellStaticData : ScriptableObject
     [SerializeField] private GameObject _prefab;
     [SerializeField] private int _experience;
     [SerializeField] private int _timeBetweenGrowingStages;
+    [SerializeField] private bool _isExperienceGivable;
+    [SerializeField] private bool _isCollectable;
 
 
     public string Name => _name;
@@ -19,4 +21,9 @@ public class BedCellStaticData : ScriptableObject
     public int Experience => _experience;
 
     public int TimeBetweenGrowingStages => _timeBetweenGrowingStages;
+
+    public bool IsExperienceGivable => _isExperienceGivable;
+
+    public bool IsCollectable => _isCollectable;
 }
+

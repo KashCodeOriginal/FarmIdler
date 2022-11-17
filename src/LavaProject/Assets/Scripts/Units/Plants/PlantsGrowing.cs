@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 public class PlantsGrowing : MonoBehaviour
 {
-    [SerializeField] private float _timeBetweenStages;
-    
     [SerializeField] private List<GameObject> _stages = new List<GameObject>();
     
+    private float _timeBetweenStages;
+
     private float _currentStageTime = 0;
     
     private int _currentStage = 0;
@@ -25,6 +25,11 @@ public class PlantsGrowing : MonoBehaviour
     {
         _wasPlantGrown = false;
         SetStage(_currentStage);
+    }
+
+    public void SetStageTime(int time)
+    {
+        _timeBetweenStages = time;
     }
     
     private void SetStage(int stage)

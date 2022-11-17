@@ -80,7 +80,7 @@ public class BedInstancesWatcher : IBedInstancesWatcher
             {
                 var plantsGrowing = bed.GetComponentInChildren<PlantsGrowing>();
                 
-                if (plantsGrowing.WasPlantGrown)
+                if (plantsGrowing.WasPlantGrown && bedCellStaticData.IsExperienceGivable)
                 {
                     plantInfoScreen.MakeButtonInteractable();
                 }
@@ -107,13 +107,13 @@ public class BedInstancesWatcher : IBedInstancesWatcher
                 farmerExperience.AddExperience(bedCellStaticData.Experience);
             }
 
-            /*if (bed.BedCellType == BedCellType.Carrot)
+            if (bedCellStaticData.IsCollectable)
             {
                 if (_playerInstance.TryGetComponent(out FarmerInventory farmerInventory))
                 {
                     farmerInventory.AddCarrot(Random.Range(1, 3));
                 }
-            }*/
+            }
             
             bed.SetBedType(null);
         }
