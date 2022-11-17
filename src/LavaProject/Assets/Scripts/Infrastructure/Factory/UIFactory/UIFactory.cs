@@ -2,6 +2,7 @@ using Zenject;
 using UnityEngine;
 using System.Threading.Tasks;
 using KasherOriginal.AssetsAddressable;
+using UnityEngine.UI;
 
 namespace KasherOriginal.Factories.UIFactory
 {
@@ -20,7 +21,6 @@ namespace KasherOriginal.Factories.UIFactory
         public GameObject MenuLoadingScreen { get; private set; }
         public GameObject MainMenuScreen { get; private set; }
         public GameObject GameLoadingScreen { get; private set; }
-        public GameObject GameLoadingScreenSecond { get; private set; }
         public GameObject GameplayScreen { get; private set; }
         public GameObject PlantChooseScreen { get; private set; }
         public GameObject PlantInfoScreen { get; private set; }
@@ -113,6 +113,18 @@ namespace KasherOriginal.Factories.UIFactory
         public void DestroyPlantInfoScreen()
         {
             Object.Destroy(PlantInfoScreen);
+        }
+        
+        public async Task<Button> CreateBedChooseButton()
+        {
+            var buttonPrefab =
+                await _assetsAddressableService.GetAsset<GameObject>(AssetsAddressablesConstants.CHOOSE_BUTTON_PREFAB);
+
+            var instance = _container.InstantiatePrefab(buttonPrefab);
+
+            var button = instance.GetComponent<Button>();
+            
+            return button;
         }
     }
 }

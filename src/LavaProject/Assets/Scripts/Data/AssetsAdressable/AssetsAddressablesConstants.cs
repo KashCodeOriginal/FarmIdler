@@ -10,6 +10,7 @@ public class AssetsAddressablesConstants
     public const string GAMEPLAY_SCREEN = "GameplayScreen";
     public const string PLANT_CHOOSE_SCREEN = "PlantChooseScreen";
     public const string PLANT_INFO_SCREEN = "PlantInfoScreen";
+    public const string CHOOSE_BUTTON_PREFAB = "ChooseButtonPrefab";
 
     public const string BASE_MAP = "BaseMap";
     public const string MAIN_CAMERA = "MainCamera";

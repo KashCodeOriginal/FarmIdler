@@ -7,9 +7,8 @@ using KasherOriginal.Factories.AbstractFactory;
 public class BedMeshHandler : MonoBehaviour
 {
     [Inject]
-    public void Construct(IAssetsAddressableService assetsAddressableService, IAbstractFactory abstractFactory)
+    public void Construct(IAbstractFactory abstractFactory)
     {
-        _assetsAddressableService = assetsAddressableService;
         _abstractFactory = abstractFactory;
     }
 
@@ -17,12 +16,11 @@ public class BedMeshHandler : MonoBehaviour
 
     private GameObject _currentPlant;
 
-    private IAssetsAddressableService _assetsAddressableService;
     private IAbstractFactory _abstractFactory;
 
-    public async void SetBedMesh(BedCellType bedCellType)
+    public void SetBedMesh(BedCellStaticData bedCellStaticData)
     {
-        var plantPrefab = await GetMeshType(bedCellType);
+        var plantPrefab = bedCellStaticData.Prefab;
 
         if (plantPrefab != null)
         {
@@ -30,36 +28,5 @@ public class BedMeshHandler : MonoBehaviour
         
             _currentPlant.transform.SetParent(transform);
         }
-    }
-
-    private async Task<GameObject> GetMeshType(BedCellType bedCellType)
-    {
-        switch (bedCellType)
-        {
-            case BedCellType.Empty:
-                if (_currentPlant != null)
-                {
-                    Destroy(_currentPlant);
-                }
-                return null;
-            case BedCellType.Carrot:
-                var carrotPrefab = await GetAssetByPath(AssetsAddressablesConstants.BASE_CARROT);
-                return carrotPrefab;
-            case BedCellType.Tree:
-                var treePrefab = await GetAssetByPath(AssetsAddressablesConstants.BASE_TREE);
-                return treePrefab;
-            case BedCellType.Grass:
-                var grassPrefab = await GetAssetByPath(AssetsAddressablesConstants.BASE_GRASS);
-                return grassPrefab;
-        }
-
-        return null;
-    }
-
-    private async Task<GameObject> GetAssetByPath(string path)
-    {
-        var prefab = await _assetsAddressableService.GetAsset<GameObject>(path);
-
-        return prefab;
     }
 }

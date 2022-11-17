@@ -8,4 +8,15 @@ public class BedCellStaticData : ScriptableObject
     [SerializeField] private GameObject _prefab;
     [SerializeField] private int _experience;
     [SerializeField] private int _timeBetweenGrowingStages;
+
+
+    public string Name => _name;
+
+    public Sprite Icon => _icon;
+
+    public GameObject Prefab => _prefab;
+
+    public int Experience => _experience;
+
+    public int TimeBetweenGrowingStages => _timeBetweenGrowingStages;
 }

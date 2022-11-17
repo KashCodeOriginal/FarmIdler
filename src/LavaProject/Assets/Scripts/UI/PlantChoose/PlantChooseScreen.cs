@@ -2,33 +2,43 @@ using Zenject;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using KasherOriginal.Settings;
 using KasherOriginal.Factories.UIFactory;
 
 public class PlantChooseScreen : MonoBehaviour
 {
     [Inject]
-    public void Construct(IUIFactory uiFactory)
+    public void Construct(IUIFactory uiFactory, PlantSettings plantSettings)
     {
+        _plantSettings = plantSettings;
         _uiFactory = uiFactory;
     }
 
-    private IUIFactory _uiFactory;
-    
-    public event UnityAction<BedCellType> IsChooseButtonClicked;
-    
-    [SerializeField] private Button _carrotChooseButton;
-    [SerializeField] private Button _treeChooseButton;
-    [SerializeField] private Button _grassChooseButton;
-    
+    public event UnityAction<BedCellStaticData> IsChooseButtonClicked;
+
     [SerializeField] private Button _closePanelButton;
     [SerializeField] private Button _closePanelBackgroundButton;
+    [SerializeField] private Transform _parent;
 
-    private void Start()
+    private IUIFactory _uiFactory;
+    private PlantSettings _plantSettings;
+
+    private async void Start()
     {
-        _carrotChooseButton.onClick.AddListener(delegate { IsChooseButtonClicked?.Invoke(BedCellType.Carrot); });
-        _treeChooseButton.onClick.AddListener(delegate { IsChooseButtonClicked?.Invoke(BedCellType.Tree); });
-        _grassChooseButton.onClick.AddListener(delegate { IsChooseButtonClicked?.Invoke(BedCellType.Grass); });
-        
+        foreach (var bedCellData in _plantSettings.BedCells)
+        {
+            var button = await _uiFactory.CreateBedChooseButton();
+
+            if (button.TryGetComponent(out ChooseButton chooseButton))
+            {
+                chooseButton.SetUp(bedCellData);
+            }
+            
+            button.onClick.AddListener(delegate { ChooseButtonClicked(bedCellData);});
+            
+            button.transform.SetParent(_parent);
+        }
+
         _closePanelButton.onClick.AddListener(DestroyScreen);
         _closePanelBackgroundButton.onClick.AddListener(DestroyScreen);
     }
@@ -36,5 +46,10 @@ public class PlantChooseScreen : MonoBehaviour
     private void DestroyScreen()
     {
         _uiFactory.DestroyPlantChooseScreen();
+    }
+
+    private void ChooseButtonClicked(BedCellStaticData bedCellStaticData)
+    {
+        IsChooseButtonClicked?.Invoke(bedCellStaticData);
     }
 }

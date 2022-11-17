@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Threading.Tasks;
+using UnityEngine.UI;
 
 namespace KasherOriginal.Factories.UIFactory
 {
@@ -17,6 +18,7 @@ namespace KasherOriginal.Factories.UIFactory
         public void DestroyPlantChooseScreen();
         public Task<GameObject> CreatePlantInfoScreen();
         public void DestroyPlantInfoScreen();
+        Task<Button> CreateBedChooseButton();
     }
 }
 

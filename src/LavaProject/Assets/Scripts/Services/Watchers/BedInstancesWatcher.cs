@@ -8,11 +8,10 @@ using Random = UnityEngine.Random;
 
 public class BedInstancesWatcher : IBedInstancesWatcher
 {
-    public BedInstancesWatcher(IBedFactory bedFactory, IUIFactory uiFactory, PlantSettings plantSettings)
+    public BedInstancesWatcher(IBedFactory bedFactory, IUIFactory uiFactory)
     {
         _bedFactory = bedFactory;
         _uiFactory = uiFactory;
-        _plantSettings = plantSettings;
     }
 
     public event UnityAction<Bed> IsBedModified;
@@ -23,8 +22,6 @@ public class BedInstancesWatcher : IBedInstancesWatcher
     private List<GameObject> _instances = new List<GameObject>();
 
     private GameObject _playerInstance;
-
-    private PlantSettings _plantSettings;
 
     public IReadOnlyList<GameObject> Instances => _instances;
 
@@ -55,7 +52,9 @@ public class BedInstancesWatcher : IBedInstancesWatcher
 
     private async void BedWasInteracted(Bed bed)
     {
-        if (bed.BedCellType == BedCellType.Empty)
+        BedCellStaticData bedCellStaticData = bed.BedCellStaticSata;
+        
+        if (bedCellStaticData == null)
         {
             var plantChooseScreenInstance = await  _uiFactory.CreatePlantChooseScreen();
 
@@ -72,16 +71,16 @@ public class BedInstancesWatcher : IBedInstancesWatcher
             {
                 plantInfoScreen.IsCollectButtonClicked += PlantWasCollected;
 
-                var plantImage = bed.GetPlantImage();
+                var plantImage = bedCellStaticData.Icon;
                 
-                plantInfoScreen.SetPlantInfo(bed.BedCellType.ToString(), plantImage);
+                plantInfoScreen.SetPlantInfo(bedCellStaticData.Name, plantImage);
             }
 
             if (bed.GetComponentInChildren<PlantsGrowing>())
             {
                 var plantsGrowing = bed.GetComponentInChildren<PlantsGrowing>();
                 
-                if (plantsGrowing.WasPlantGrown && bed.BedCellType != BedCellType.Tree)
+                if (plantsGrowing.WasPlantGrown)
                 {
                     plantInfoScreen.MakeButtonInteractable();
                 }
@@ -92,9 +91,9 @@ public class BedInstancesWatcher : IBedInstancesWatcher
             }
         }
 
-        void PlantWasChosen(BedCellType bedCellType)
+        void PlantWasChosen(BedCellStaticData newBedCellStaticData)
         {
-            bed.SetBedType(bedCellType);
+            bed.SetBedType(newBedCellStaticData);
             
             IsBedModified?.Invoke(bed);
             
@@ -105,19 +104,18 @@ public class BedInstancesWatcher : IBedInstancesWatcher
         {
             if (_playerInstance.TryGetComponent(out FarmerExperience farmerExperience))
             {
-                farmerExperience.AddExperience(GetExperienceByBedType(bed.BedCellType));
+                farmerExperience.AddExperience(bedCellStaticData.Experience);
             }
 
-            if (bed.BedCellType == BedCellType.Carrot)
+            /*if (bed.BedCellType == BedCellType.Carrot)
             {
                 if (_playerInstance.TryGetComponent(out FarmerInventory farmerInventory))
                 {
                     farmerInventory.AddCarrot(Random.Range(1, 3));
                 }
-            }
+            }*/
             
-            bed.SetBedType(BedCellType.Empty);
-            bed.SetBedMesh();
+            bed.SetBedType(null);
         }
     }
 
@@ -127,18 +125,5 @@ public class BedInstancesWatcher : IBedInstancesWatcher
         {
             bed.SetBedMesh();
         }
-    }
-
-    private int GetExperienceByBedType(BedCellType bedCellType)
-    {
-        switch (bedCellType)
-        {
-            case BedCellType.Carrot:
-                return _plantSettings.CarrotCollectExperience;
-            case BedCellType.Grass:
-                return _plantSettings.GrassCollectExperience;
-        }
-
-        return 0;
     }
 }

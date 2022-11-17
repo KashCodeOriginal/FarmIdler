@@ -9,17 +9,15 @@ using KasherOriginal.AssetsAddressable;
 
 public class BedFactory : IBedFactory
 {
-    public BedFactory(DiContainer container, IAssetsAddressableService assetsAddressableService, PlantSettings plantSettings)
+    public BedFactory(DiContainer container, IAssetsAddressableService assetsAddressableService)
     {
         _container = container;
         _assetsAddressableService = assetsAddressableService;
-        _plantSettings = plantSettings;
     }
 
     private readonly DiContainer _container;
     private readonly IAssetsAddressableService _assetsAddressableService;
-    private readonly PlantSettings _plantSettings;
-    
+
     private List<GameObject> _instances = new List<GameObject>();
 
     public IReadOnlyList<GameObject> Instances
@@ -33,19 +31,9 @@ public class BedFactory : IBedFactory
         
         var instance = _container.InstantiatePrefab(bedPrefab, spawnPoint, Quaternion.identity, null);
 
-        SetUp(instance);
-        
         _instances.Add(instance);
 
         return instance;
-    }
-
-    private void SetUp(GameObject instance)
-    {
-        if (instance.TryGetComponent(out Bed bed))
-        {
-            bed.Construct(_plantSettings);
-        }
     }
 
     public void DestroyInstance(GameObject instance)
