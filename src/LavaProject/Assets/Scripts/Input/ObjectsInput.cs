@@ -33,7 +33,7 @@ namespace Input
 
         private void FindObjectUnderRay()
         {
-            if (UnityEngine.Input.GetMouseButtonDown(0))
+            if (UnityEngine.Input.GetMouseButtonUp(0))
             {
                 Ray ray = _camera.ScreenPointToRay(UnityEngine.Input.mousePosition);
                 RaycastHit hit;
