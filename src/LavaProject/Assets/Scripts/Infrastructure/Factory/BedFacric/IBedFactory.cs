@@ -1,9 +1,12 @@
 ﻿using System.Threading.Tasks;
 using UnityEngine;
 
-public interface IBedFactory : IBedFactoryInfo
+namespace Infrastructure.Factory.BedFacric
 {
-    public Task<GameObject> CreateInstance(Vector3 spawnPoint);
-    public void DestroyInstance(GameObject instance);
-    public void DestroyAllInstances();
+    public interface IBedFactory : IBedFactoryInfo
+    {
+        public Task<GameObject> CreateInstance(Vector3 spawnPoint);
+        public void DestroyInstance(GameObject instance);
+        public void DestroyAllInstances();
+    }
 }

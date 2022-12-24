@@ -1,7 +1,8 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Units.Bed;
+using UnityEngine;
 
-namespace KasherOriginal.Settings
+namespace Data.Settings
 {
     [CreateAssetMenu(fileName = "PlantsSettings", menuName = "Settings/PlantsSettings")]
     public class PlantSettings : BaseSettings

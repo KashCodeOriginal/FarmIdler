@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace KasherOriginal.AssetsAddressable
+namespace Services.AssetsAddressableService
 {
     public class AssetsAddressableService : IAssetsAddressableService
     {

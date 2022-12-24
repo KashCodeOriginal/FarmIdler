@@ -1,10 +1,11 @@
-using Zenject;
-using UnityEngine;
 using System.Threading.Tasks;
-using KasherOriginal.AssetsAddressable;
+using Data.AssetsAdressable;
+using Services.AssetsAddressableService;
+using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
-namespace KasherOriginal.Factories.UIFactory
+namespace Infrastructure.Factory.UIFactory
 {
     public class UIFactory : IUIFactory
     {

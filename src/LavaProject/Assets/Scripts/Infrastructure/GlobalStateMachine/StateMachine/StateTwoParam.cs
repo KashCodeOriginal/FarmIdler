@@ -1,4 +1,4 @@
-﻿namespace KasherOriginal.GlobalStateMachine
+﻿namespace Infrastructure.GlobalStateMachine.StateMachine
 {
     public class StateTwoParam<TContext, T0, T1> : BaseState<TContext>
     {

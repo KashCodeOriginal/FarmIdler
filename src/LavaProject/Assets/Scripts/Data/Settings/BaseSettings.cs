@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace KasherOriginal.Settings
+namespace Data.Settings
 {
     public class BaseSettings : ScriptableObject { }
 }

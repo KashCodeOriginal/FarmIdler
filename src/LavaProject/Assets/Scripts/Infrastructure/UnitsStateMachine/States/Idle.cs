@@ -1,19 +1,20 @@
-using UnityEngine;
-using UnitsStateMachine;
+using Units.Farmer;
+using Infrastructure.UnitsStateMachine.StateMachine;
 
-public class Idle : State
+namespace Infrastructure.UnitsStateMachine.States
 {
-    public Idle(Animator animator)
+    public class Idle : State
     {
-        _animator = animator;
-    }
+        public Idle(FarmerAnimator animator)
+        {
+            _animator = animator;
+        }
     
-    private Animator _animator;
-    
-    private static readonly int IsWalking = Animator.StringToHash("IsWalking");
+        private readonly FarmerAnimator _animator;
 
-    public override void Enter()
-    {
-        _animator.SetBool(IsWalking, false);
+        public override void Enter()
+        {
+            _animator.SetWalkState(false);
+        }
     }
 }

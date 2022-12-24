@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using Data.AssetsAdressable;
+using Infrastructure.Factory.UIFactory;
+using Infrastructure.GlobalStateMachine.StateMachine;
+using UI.MainMenu;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
-using KasherOriginal.Factories.UIFactory;
 
-namespace KasherOriginal.GlobalStateMachine
+namespace Infrastructure.GlobalStateMachine.States
 {
     public class GameLoadingState : StateOneParam<GameInstance, MainMenuScreen>
     {

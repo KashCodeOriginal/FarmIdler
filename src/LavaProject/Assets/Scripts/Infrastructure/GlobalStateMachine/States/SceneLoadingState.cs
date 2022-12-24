@@ -1,7 +1,9 @@
-﻿using KasherOriginal.Factories.UIFactory;
+﻿using Data.AssetsAdressable;
+using Infrastructure.Factory.UIFactory;
+using Infrastructure.GlobalStateMachine.StateMachine;
 using UnityEngine.AddressableAssets;
 
-namespace KasherOriginal.GlobalStateMachine
+namespace Infrastructure.GlobalStateMachine.States
 {
     public class SceneLoadingState : State<GameInstance>
     {

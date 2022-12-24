@@ -1,4 +1,4 @@
-namespace UnitsStateMachine
+namespace Infrastructure.UnitsStateMachine.StateMachine
 {
     public class State
     {

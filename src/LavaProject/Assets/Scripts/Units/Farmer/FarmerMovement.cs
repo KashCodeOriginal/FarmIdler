@@ -1,108 +1,150 @@
-﻿using Zenject;
+﻿using System;
+using System.Collections.Generic;
+using Data.Dynamic;
+using Data.Extensions;
+using Data.Settings;
 using Pathfinding;
+using Services.PersistentProgress;
+using Services.SaveLoad;
+using Services.Watchers;
+using Units.Farmer.Model;
 using UnityEngine;
 using UnityEngine.Events;
-using KasherOriginal.Settings;
-using System.Collections.Generic;
+using Zenject;
 
-public class FarmerMovement : MonoBehaviour, IMovable
+namespace Units.Farmer
 {
-    [Inject]
-    public void Construct(IBedInstancesWatcher bedInstancesWatcher, GameSettings gameSettings)
+    public class FarmerMovement : MonoBehaviour, IMovable, IProgressSavable, IProgressLoadable
     {
-        _bedInstancesWatcher = bedInstancesWatcher;
-        _gameSettings = gameSettings;
-    }
-
-    public event UnityAction<GameObject> IsBedVisited;
-
-    [SerializeField] private float _reachedPointDistance;
-
-    private GameSettings _gameSettings;
-
-    private Vector3 _homePosition;
-
-    private IBedInstancesWatcher _bedInstancesWatcher;
-
-    private GameObject _positionTarget;
-
-    private List<Transform> _targets = new List<Transform>();
-
-    private Transform _currentTarget;
-
-    public bool IsTargetReached { get; private set; }
-    public bool IsHomeReached { get; private set; }
-
-
-    public IReadOnlyList<Transform> MoveTargets
-    {
-        get => _targets;
-    }
-
-    private void Start()
-    {
-        _positionTarget = new GameObject
+        [Inject]
+        public void Construct(IBedInstancesWatcher bedInstancesWatcher, GameSettings gameSettings, ISaveLoadService saveLoadService)
         {
-            name = "FarmerTarget"
-        };
-
-        _bedInstancesWatcher.IsBedModified += BedWasModified;
-
-        _homePosition = _gameSettings.PlayerSpawnPosition;
-    }
-
-    public void MoveToPoint(AIDestinationSetter aiDestinationSetter)
-    {
-        IsHomeReached = false;
-        
-        if (_targets.Count > 0)
-        {
-            _currentTarget = _targets[0];
-            
-            _positionTarget.transform.position = _currentTarget.position;
-            
-            aiDestinationSetter.target = _positionTarget.transform;
+            _bedInstancesWatcher = bedInstancesWatcher;
+            _gameSettings = gameSettings;
+            _saveLoadService = saveLoadService;
         }
-        
-        if (Vector3.Distance(gameObject.transform.position, _positionTarget.transform.position) < _reachedPointDistance)
+
+        public event UnityAction<GameObject> IsBedVisited;
+
+        [SerializeField] private float _reachedPointDistance;
+
+        private GameSettings _gameSettings;
+
+        private Vector3 _homePosition;
+
+        private IBedInstancesWatcher _bedInstancesWatcher;
+        private ISaveLoadService _saveLoadService;
+
+        private GameObject _positionTarget;
+
+        private List<Transform> _targets = new List<Transform>();
+
+        private Transform _currentTarget;
+
+        public bool IsTargetReached { get; private set; }
+        public bool IsHomeReached { get; private set; }
+
+
+        public IReadOnlyList<Transform> MoveTargets
         {
-            IsBedVisited?.Invoke(_targets[0].gameObject);
+            get => _targets;
+        }
+
+        private void Start()
+        {
+            _positionTarget = new GameObject
+            {
+                name = "FarmerTarget"
+            };
+
+            _bedInstancesWatcher.IsBedModified += BedWasModified;
+
+            _homePosition = _gameSettings.PlayerSpawnPosition;
+        }
+
+        private void Update()
+        {
+            if (UnityEngine.Input.GetKeyDown(KeyCode.A))
+            {
+                _saveLoadService.SaveProgress();
+            }
+        }
+
+        public void MoveToPoint(AIDestinationSetter aiDestinationSetter)
+        {
+            IsHomeReached = false;
+        
+            if (_targets.Count > 0)
+            {
+                _currentTarget = _targets[0];
             
-            IsTargetReached = true;
+                _positionTarget.transform.position = _currentTarget.position;
+            
+                aiDestinationSetter.target = _positionTarget.transform;
+            }
+        
+            if (Vector3.Distance(gameObject.transform.position, _positionTarget.transform.position) < _reachedPointDistance)
+            {
+                IsBedVisited?.Invoke(_targets[0].gameObject);
+            
+                IsTargetReached = true;
 
-            _targets.Remove(_targets[0]);
+                _targets.Remove(_targets[0]);
 
-            _currentTarget = null;
+                _currentTarget = null;
+            }
         }
-    }
 
-    public void MoveToHome(AIDestinationSetter aiDestinationSetter)
-    {
-        _positionTarget.transform.position = _homePosition;
-        
-        _currentTarget = _positionTarget.transform;
-
-        aiDestinationSetter.target = _currentTarget;
-        
-        if (Vector3.Distance(gameObject.transform.position, _homePosition) < _reachedPointDistance)
+        public void MoveToHome(AIDestinationSetter aiDestinationSetter)
         {
-            _currentTarget = null;
-            IsHomeReached = true;
+            _positionTarget.transform.position = _homePosition;
+        
+            _currentTarget = _positionTarget.transform;
+
+            aiDestinationSetter.target = _currentTarget;
+        
+            if (Vector3.Distance(gameObject.transform.position, _homePosition) < _reachedPointDistance)
+            {
+                _currentTarget = null;
+                IsHomeReached = true;
+            }
         }
-    }
 
-    public void AddMovingPoint(Transform point)
-    {
-        _targets.Add(point);
-    }
+        public void AddMovingPoint(Transform point)
+        {
+            _targets.Add(point);
+        }
 
-    private void BedWasModified(Bed bed)
-    {
-        AddMovingPoint(bed.transform);
-    }
+        private void BedWasModified(Bed.Bed bed)
+        {
+            AddMovingPoint(bed.transform);
+        }
 
-    private void OnDisable()
-    {
-        _bedInstancesWatcher.IsBedModified -= BedWasModified;
+        private void OnDisable()
+        {
+            _bedInstancesWatcher.IsBedModified -= BedWasModified;
+        }
+
+        public void UpdateProgress(PlayerProgress playerProgress)
+        {
+            var position = transform.position;
+            playerProgress.WorldData.PositionOnLevel = new PositionOnLevel(position.AsVectorData());
+        }
+
+
+        public void LoadProgress(PlayerProgress playerProgress)
+        {
+            var position = playerProgress.WorldData.PositionOnLevel.Position;
+
+            if (position != null)
+            {
+                WarpPosition(position);
+            }
+        }
+
+        private void WarpPosition(Vector3Data position)
+        {
+            transform.position = position.AsVector3().AddHeight(0.5f);
+        }
     }
 }

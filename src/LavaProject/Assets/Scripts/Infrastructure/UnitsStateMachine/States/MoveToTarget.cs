@@ -1,31 +1,34 @@
-using UnityEngine;
+using Infrastructure.UnitsStateMachine.StateMachine;
 using Pathfinding;
-using UnitsStateMachine;
+using Units.Farmer;
+using Units.Farmer.Model;
+using UnityEngine;
 
-public class MoveToTarget : State
+namespace Infrastructure.UnitsStateMachine.States
 {
-    public MoveToTarget(IMovable movable, AIDestinationSetter aiDestinationSetter, Animator animator)
+    public class MoveToTarget : State
     {
-        _movable = movable;
-        _aiDestinationSetter = aiDestinationSetter;
-        _animator = animator;
-    }
+        public MoveToTarget(IMovable movable, AIDestinationSetter aiDestinationSetter, FarmerAnimator animator)
+        {
+            _movable = movable;
+            _aiDestinationSetter = aiDestinationSetter;
+            _animator = animator;
+        }
 
-    private readonly IMovable _movable;
+        private readonly IMovable _movable;
 
-    private readonly AIDestinationSetter _aiDestinationSetter;
+        private readonly AIDestinationSetter _aiDestinationSetter;
 
-    private readonly Animator _animator;
+        private readonly FarmerAnimator _animator;
+        
+        public override void Enter()
+        {
+            _animator.SetWalkState(true);
+        }
 
-    private static readonly int IsWalking = Animator.StringToHash("IsWalking");
-
-    public override void Enter()
-    {
-        _animator.SetBool(IsWalking, true);
-    }
-
-    public override void Tick()
-    {
-        _movable.MoveToPoint(_aiDestinationSetter);
+        public override void Tick()
+        {
+            _movable.MoveToPoint(_aiDestinationSetter);
+        }
     }
 }

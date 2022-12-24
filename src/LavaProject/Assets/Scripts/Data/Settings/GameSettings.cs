@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace KasherOriginal.Settings
+namespace Data.Settings
 {
     [CreateAssetMenu(fileName = "GameSettings", menuName = "Settings/GameSettings")]
     public class GameSettings : BaseSettings

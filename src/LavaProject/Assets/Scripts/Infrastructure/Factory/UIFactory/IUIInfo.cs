@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace KasherOriginal.Factories.UIFactory
+namespace Infrastructure.Factory.UIFactory
 {
     public interface IUIInfo
     {

@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class CameraFollowing : MonoBehaviour
+namespace Units.Camera
 {
+    public class CameraFollowing : MonoBehaviour
+    {
     
+    }
 }

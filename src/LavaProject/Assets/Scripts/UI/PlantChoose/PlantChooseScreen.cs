@@ -1,55 +1,59 @@
-using Zenject;
+using Data.Settings;
+using Infrastructure.Factory.UIFactory;
+using Units.Bed;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
-using KasherOriginal.Settings;
-using KasherOriginal.Factories.UIFactory;
+using UnityEngine.UI;
+using Zenject;
 
-public class PlantChooseScreen : MonoBehaviour
+namespace UI.PlantChoose
 {
-    [Inject]
-    public void Construct(IUIFactory uiFactory, PlantSettings plantSettings)
+    public class PlantChooseScreen : MonoBehaviour
     {
-        _plantSettings = plantSettings;
-        _uiFactory = uiFactory;
-    }
-
-    public event UnityAction<BedCellStaticData> IsChooseButtonClicked;
-
-    [SerializeField] private Button _closePanelButton;
-    [SerializeField] private Button _closePanelBackgroundButton;
-    [SerializeField] private Transform _parent;
-
-    private IUIFactory _uiFactory;
-    private PlantSettings _plantSettings;
-
-    private async void Start()
-    {
-        foreach (var bedCellData in _plantSettings.BedCells)
+        [Inject]
+        public void Construct(IUIFactory uiFactory, PlantSettings plantSettings)
         {
-            var button = await _uiFactory.CreateBedChooseButton();
-
-            if (button.TryGetComponent(out ChooseButton chooseButton))
-            {
-                chooseButton.SetUp(bedCellData);
-            }
-            
-            button.onClick.AddListener(delegate { ChooseButtonClicked(bedCellData);});
-            
-            button.transform.SetParent(_parent);
+            _plantSettings = plantSettings;
+            _uiFactory = uiFactory;
         }
 
-        _closePanelButton.onClick.AddListener(DestroyScreen);
-        _closePanelBackgroundButton.onClick.AddListener(DestroyScreen);
-    }
+        public event UnityAction<BedCellStaticData> IsChooseButtonClicked;
 
-    private void DestroyScreen()
-    {
-        _uiFactory.DestroyPlantChooseScreen();
-    }
+        [SerializeField] private Button _closePanelButton;
+        [SerializeField] private Button _closePanelBackgroundButton;
+        [SerializeField] private Transform _parent;
 
-    private void ChooseButtonClicked(BedCellStaticData bedCellStaticData)
-    {
-        IsChooseButtonClicked?.Invoke(bedCellStaticData);
+        private IUIFactory _uiFactory;
+        private PlantSettings _plantSettings;
+
+        private async void Start()
+        {
+            foreach (var bedCellData in _plantSettings.BedCells)
+            {
+                var button = await _uiFactory.CreateBedChooseButton();
+
+                if (button.TryGetComponent(out ChooseButton chooseButton))
+                {
+                    chooseButton.SetUp(bedCellData);
+                }
+            
+                button.onClick.AddListener(delegate { ChooseButtonClicked(bedCellData);});
+            
+                button.transform.SetParent(_parent);
+            }
+
+            _closePanelButton.onClick.AddListener(DestroyScreen);
+            _closePanelBackgroundButton.onClick.AddListener(DestroyScreen);
+        }
+
+        private void DestroyScreen()
+        {
+            _uiFactory.DestroyPlantChooseScreen();
+        }
+
+        private void ChooseButtonClicked(BedCellStaticData bedCellStaticData)
+        {
+            IsChooseButtonClicked?.Invoke(bedCellStaticData);
+        }
     }
 }

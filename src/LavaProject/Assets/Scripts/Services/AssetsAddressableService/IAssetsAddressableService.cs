@@ -1,7 +1,7 @@
-using UnityEngine;
 using System.Threading.Tasks;
+using UnityEngine;
 
-namespace KasherOriginal.AssetsAddressable
+namespace Services.AssetsAddressableService
 {
     public interface IAssetsAddressableService
     {

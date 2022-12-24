@@ -1,19 +1,23 @@
+using Units.Bed.Model;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class BedInteractable : MonoBehaviour, IInteractable
+namespace Units.Bed
 {
-    private Bed _bed;
-
-    private void Start()
+    public class BedInteractable : MonoBehaviour, IInteractable
     {
-        _bed = GetComponent<Bed>();
-    }
+        private Bed _bed;
 
-    public event UnityAction<Bed> IsBedInteracted;
+        private void Start()
+        {
+            _bed = GetComponent<Bed>();
+        }
 
-    public void Interact()
-    {
-        IsBedInteracted?.Invoke(_bed);
+        public event UnityAction<Bed> IsBedInteracted;
+
+        public void Interact()
+        {
+            IsBedInteracted?.Invoke(_bed);
+        }
     }
 }

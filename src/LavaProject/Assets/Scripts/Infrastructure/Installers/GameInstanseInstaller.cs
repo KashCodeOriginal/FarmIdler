@@ -1,14 +1,18 @@
+using Infrastructure.GlobalStateMachine;
 using Zenject;
 
-public class GameInstanseInstaller : MonoInstaller
+namespace Infrastructure.Installers
 {
-   public override void InstallBindings()
+   public class GameInstanseInstaller : MonoInstaller
    {
-      BindGameInstance();
-   }
+      public override void InstallBindings()
+      {
+         BindGameInstance();
+      }
 
-   private void BindGameInstance()
-   {
-      Container.Bind<GameInstance>().AsSingle().NonLazy();
+      private void BindGameInstance()
+      {
+         Container.Bind<GameInstance>().AsSingle().NonLazy();
+      }
    }
 }

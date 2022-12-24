@@ -1,6 +1,7 @@
+using Infrastructure.GlobalStateMachine.StateMachine;
 using Zenject;
 
-namespace KasherOriginal.GlobalStateMachine
+namespace Infrastructure.GlobalStateMachine.States
 {
     public class BootstrapState : State<GameInstance>, IInitializable
     {

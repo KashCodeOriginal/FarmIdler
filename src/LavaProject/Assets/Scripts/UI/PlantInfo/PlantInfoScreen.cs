@@ -1,66 +1,69 @@
-using Zenject;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
-using KasherOriginal.Factories.UIFactory;
+using Infrastructure.Factory.UIFactory;
 using TMPro;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
+using Zenject;
 
-public class PlantInfoScreen : MonoBehaviour
+namespace UI.PlantInfo
 {
-    [Inject]
-    public void Construct(IUIFactory uiFactory)
+    public class PlantInfoScreen : MonoBehaviour
     {
-        _uiFactory = uiFactory;
-    }
+        [Inject]
+        public void Construct(IUIFactory uiFactory)
+        {
+            _uiFactory = uiFactory;
+        }
 
-    public event UnityAction IsCollectButtonClicked;
+        public event UnityAction IsCollectButtonClicked;
 
-    [SerializeField] private Button _closePanelButton;
-    [SerializeField] private Button _closePanelBackgroundButton;
+        [SerializeField] private Button _closePanelButton;
+        [SerializeField] private Button _closePanelBackgroundButton;
     
-    [SerializeField] private TextMeshProUGUI _infoPanelPlantName;
+        [SerializeField] private TextMeshProUGUI _infoPanelPlantName;
     
-    [SerializeField] private Button _collectButton;
-    [SerializeField] private GameObject _collectButtonInstance;
+        [SerializeField] private Button _collectButton;
+        [SerializeField] private GameObject _collectButtonInstance;
 
-    [SerializeField] private Image _plantImage;
+        [SerializeField] private Image _plantImage;
     
-    private IUIFactory _uiFactory;
+        private IUIFactory _uiFactory;
 
 
-    private void Start()
-    {
-        _closePanelButton.onClick.AddListener(DestroyScreen);
-        _closePanelBackgroundButton.onClick.AddListener(DestroyScreen);
+        private void Start()
+        {
+            _closePanelButton.onClick.AddListener(DestroyScreen);
+            _closePanelBackgroundButton.onClick.AddListener(DestroyScreen);
         
-        _collectButton.onClick.AddListener(CollectButtonClicked);
-    }
+            _collectButton.onClick.AddListener(CollectButtonClicked);
+        }
 
-    public void MakeButtonInteractable()
-    {
-        _collectButtonInstance.SetActive(true);
-    }
+        public void MakeButtonInteractable()
+        {
+            _collectButtonInstance.SetActive(true);
+        }
     
-    public void MakeButtonUnInteractable()
-    {
-        _collectButtonInstance.SetActive(false);
-    }
+        public void MakeButtonUnInteractable()
+        {
+            _collectButtonInstance.SetActive(false);
+        }
 
-    public void SetPlantInfo(string plantName, Sprite image)
-    {
-        _infoPanelPlantName.text = plantName;
-        _plantImage.sprite = image;
-    }
+        public void SetPlantInfo(string plantName, Sprite image)
+        {
+            _infoPanelPlantName.text = plantName;
+            _plantImage.sprite = image;
+        }
     
-    private void DestroyScreen()
-    {
-        _uiFactory.DestroyPlantInfoScreen();
-    }
+        private void DestroyScreen()
+        {
+            _uiFactory.DestroyPlantInfoScreen();
+        }
 
-    private void CollectButtonClicked()
-    {
-        IsCollectButtonClicked?.Invoke();
+        private void CollectButtonClicked()
+        {
+            IsCollectButtonClicked?.Invoke();
         
-        _uiFactory.DestroyPlantInfoScreen();
+            _uiFactory.DestroyPlantInfoScreen();
+        }
     }
 }

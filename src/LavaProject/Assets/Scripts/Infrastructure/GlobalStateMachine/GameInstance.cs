@@ -1,23 +1,45 @@
-using KasherOriginal.Settings;
-using KasherOriginal.AssetsAddressable;
-using KasherOriginal.GlobalStateMachine;
-using KasherOriginal.Factories.UIFactory;
-using KasherOriginal.Factories.AbstractFactory;
+using Data.Settings;
+using Infrastructure.Factory.AbstractFactory;
+using Infrastructure.Factory.UIFactory;
+using Infrastructure.GlobalStateMachine.StateMachine;
+using Infrastructure.GlobalStateMachine.States;
+using Services.AssetsAddressableService;
+using Services.PersistentProgress;
+using Services.SaveLoad;
+using Services.Watchers;
+using Services.Watchers.SaveLoadWatcher;
 
-public class GameInstance
+namespace Infrastructure.GlobalStateMachine
 {
-    public GameInstance(IUIFactory uiFactory, IAssetsAddressableService assetsAddressableService, IAbstractFactory abstractFactory, GameSettings gameSettings, IBedInstancesWatcher bedInstancesWatcher)
+    public class GameInstance
     {
-        StateMachine = new StateMachine<GameInstance>(this, new BootstrapState(this),
-            new SceneLoadingState(this, uiFactory),
-            new MainMenuState(this, uiFactory),
-            new GameLoadingState(this, uiFactory),
-            new GameSetUpState(this, abstractFactory, assetsAddressableService, gameSettings, bedInstancesWatcher),
-            new GameplayState(this, uiFactory)
+        public GameInstance(IUIFactory uiFactory, 
+            IAssetsAddressableService assetsAddressableService, 
+            IAbstractFactory abstractFactory, 
+            GameSettings gameSettings, 
+            IBedInstancesWatcher bedInstancesWatcher,
+            ISaveLoadInstancesWatcher saveLoadInstancesWatcher,
+            IPersistentProgressService persistentProgressService,
+            ISaveLoadService saveLoadService)
+        {
+            StateMachine = new StateMachine<GameInstance>(this, new BootstrapState(this),
+                new SceneLoadingState(this, uiFactory),
+                new MainMenuState(this, uiFactory),
+                new GameLoadingState(this, uiFactory),
+                new GameSetUpState(this, abstractFactory,
+                    assetsAddressableService,
+                    gameSettings,
+                    bedInstancesWatcher,
+                    saveLoadInstancesWatcher),
+                new ProgressLoadingState(this, persistentProgressService, 
+                    saveLoadService, 
+                    saveLoadInstancesWatcher),
+                new GameplayState(this, uiFactory)
             );
         
-        StateMachine.SwitchState<BootstrapState>();
-    }
+            StateMachine.SwitchState<BootstrapState>();
+        }
 
-    public readonly StateMachine<GameInstance> StateMachine;
+        public readonly StateMachine<GameInstance> StateMachine;
+    }
 }

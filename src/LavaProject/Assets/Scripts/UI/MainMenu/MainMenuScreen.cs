@@ -1,45 +1,48 @@
-using TMPro;
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainMenuScreen : MonoBehaviour
+namespace UI.MainMenu
 {
-    public event Action OnPlayButtonClicked;
+    public class MainMenuScreen : MonoBehaviour
+    {
+        public event Action OnPlayButtonClicked;
 
-    [SerializeField] private Button _playButton;
+        [SerializeField] private Button _playButton;
     
-    [SerializeField] private TMP_InputField _columnsInputField;
-    [SerializeField] private TMP_InputField _rowsInputField;
+        [SerializeField] private TMP_InputField _columnsInputField;
+        [SerializeField] private TMP_InputField _rowsInputField;
     
-    public int ColumnsValue
-    {
-        get
+        public int ColumnsValue
         {
-            if (_columnsInputField.text == string.Empty)
-                return 0;
+            get
+            {
+                if (_columnsInputField.text == string.Empty)
+                    return 0;
 
-            return int.Parse(_columnsInputField.text);
+                return int.Parse(_columnsInputField.text);
+            }
         }
-    }
-    public int RowsValue
-    {
-        get
+        public int RowsValue
         {
-            if(_rowsInputField.text == string.Empty)
-                return 0;
+            get
+            {
+                if(_rowsInputField.text == string.Empty)
+                    return 0;
 
-            return int.Parse(_rowsInputField.text);
+                return int.Parse(_rowsInputField.text);
+            }
         }
-    }
 
-    private void Start()
-    {
-        _playButton.onClick.AddListener(PlayButtonClick);
-    }
+        private void Start()
+        {
+            _playButton.onClick.AddListener(PlayButtonClick);
+        }
 
-    private void PlayButtonClick()
-    {
-        OnPlayButtonClicked?.Invoke();
+        private void PlayButtonClick()
+        {
+            OnPlayButtonClicked?.Invoke();
+        }
     }
 }

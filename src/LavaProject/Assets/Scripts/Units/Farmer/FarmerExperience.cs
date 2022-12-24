@@ -1,38 +1,41 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class FarmerExperience : MonoBehaviour
+namespace Units.Farmer
 {
-    public event UnityAction<int> IsExperienceValueChanged;
-    public event UnityAction<int> IsLevelValueChanged;
-
-    private int _experienceValue;
-    private int _level;
-
-    private int _maxExperienceForLevel;
-
-    private void Start()
+    public class FarmerExperience : MonoBehaviour
     {
-        _experienceValue = 0;
-        _level = 0;
-        _maxExperienceForLevel = 100;
-    }
+        public event UnityAction<int> IsExperienceValueChanged;
+        public event UnityAction<int> IsLevelValueChanged;
 
-    public void AddExperience(int increaseValue)
-    {
-        if (_experienceValue + increaseValue >= _maxExperienceForLevel)
+        private int _experienceValue;
+        private int _level;
+
+        private int _maxExperienceForLevel;
+
+        private void Start()
         {
-            var maxExperience = _maxExperienceForLevel - _experienceValue;
-            _level++;
-            _experienceValue = increaseValue - maxExperience;
-            
-            IsExperienceValueChanged?.Invoke(_experienceValue);
-            IsLevelValueChanged?.Invoke(_level);
+            _experienceValue = 0;
+            _level = 0;
+            _maxExperienceForLevel = 100;
         }
-        else
+
+        public void AddExperience(int increaseValue)
         {
-            _experienceValue += increaseValue;
-            IsExperienceValueChanged?.Invoke(_experienceValue);
+            if (_experienceValue + increaseValue >= _maxExperienceForLevel)
+            {
+                var maxExperience = _maxExperienceForLevel - _experienceValue;
+                _level++;
+                _experienceValue = increaseValue - maxExperience;
+            
+                IsExperienceValueChanged?.Invoke(_experienceValue);
+                IsLevelValueChanged?.Invoke(_level);
+            }
+            else
+            {
+                _experienceValue += increaseValue;
+                IsExperienceValueChanged?.Invoke(_experienceValue);
+            }
         }
     }
 }

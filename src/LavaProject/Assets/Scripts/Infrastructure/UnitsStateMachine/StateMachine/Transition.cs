@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UnitsStateMachine
+namespace Infrastructure.UnitsStateMachine.StateMachine
 {
     public class Transition
     {

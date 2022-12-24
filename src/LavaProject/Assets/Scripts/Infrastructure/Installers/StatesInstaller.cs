@@ -1,15 +1,18 @@
+using Infrastructure.GlobalStateMachine.States;
 using Zenject;
-using KasherOriginal.GlobalStateMachine;
 
-public class StatesInstaller : MonoInstaller
+namespace Infrastructure.Installers
 {
-    public override void InstallBindings()
+    public class StatesInstaller : MonoInstaller
     {
-        BindBootstrapState();
-    }
+        public override void InstallBindings()
+        {
+            BindBootstrapState();
+        }
 
-    private void BindBootstrapState()
-    {
-        Container.Bind<IInitializable>().To<BootstrapState>().AsSingle().NonLazy();
+        private void BindBootstrapState()
+        {
+            Container.Bind<IInitializable>().To<BootstrapState>().AsSingle().NonLazy();
+        }
     }
 }

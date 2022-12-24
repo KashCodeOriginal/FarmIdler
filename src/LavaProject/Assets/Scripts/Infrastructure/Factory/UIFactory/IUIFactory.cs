@@ -1,8 +1,8 @@
-using UnityEngine;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.UI;
 
-namespace KasherOriginal.Factories.UIFactory
+namespace Infrastructure.Factory.UIFactory
 {
     public interface IUIFactory : IUIInfo
     {

@@ -1,13 +1,16 @@
-using UnitsStateMachine;
+using Infrastructure.UnitsStateMachine.StateMachine;
 
-public class Plant : State
+namespace Infrastructure.UnitsStateMachine.States
 {
-    public Plant()
+    public class Plant : State
     {
+        public Plant()
+        {
         
-    }
+        }
 
-    public override void Enter()
-    {
+        public override void Enter()
+        {
+        }
     }
 }

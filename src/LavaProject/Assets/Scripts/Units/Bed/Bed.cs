@@ -1,31 +1,34 @@
 using UnityEngine;
 
-public class Bed : MonoBehaviour
+namespace Units.Bed
 {
-    private BedCellStaticData _bedCellStaticSata;
-
-    private BedMeshHandler _bedMeshHandler;
-
-    public BedCellStaticData BedCellStaticSata => _bedCellStaticSata;
-
-    private void Start()
+    public class Bed : MonoBehaviour
     {
-        _bedMeshHandler = GetComponent<BedMeshHandler>();
-    }
+        private BedCellStaticData _bedCellStaticSata;
 
-    public void SetBedType(BedCellStaticData bedCellStaticData)
-    {
-        _bedCellStaticSata = bedCellStaticData;
-    }
+        private BedMeshHandler _bedMeshHandler;
 
-    public void SetBedMesh()
-    {
-        _bedMeshHandler.SetBedMesh(BedCellStaticSata);
-    }
+        public BedCellStaticData BedCellStaticSata => _bedCellStaticSata;
 
-    public void ResetBedMesh()
-    {
-        SetBedType(null);
-        _bedMeshHandler.SetBedMesh(_bedCellStaticSata);
+        private void Start()
+        {
+            _bedMeshHandler = GetComponent<BedMeshHandler>();
+        }
+
+        public void SetBedType(BedCellStaticData bedCellStaticData)
+        {
+            _bedCellStaticSata = bedCellStaticData;
+        }
+
+        public void SetBedMesh()
+        {
+            _bedMeshHandler.SetBedMesh(BedCellStaticSata);
+        }
+
+        public void ResetBedMesh()
+        {
+            SetBedType(null);
+            _bedMeshHandler.SetBedMesh(_bedCellStaticSata);
+        }
     }
 }

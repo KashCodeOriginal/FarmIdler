@@ -1,45 +1,49 @@
+using Units.Bed.Model;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ObjectsInput : MonoBehaviour
+namespace Input
 {
-    [SerializeField] private LayerMask _layerMask;
-    
-    private Camera _camera;
-
-    private int _fingerID = -1;
-
-    private void Awake()
+    public class ObjectsInput : MonoBehaviour
     {
-        #if(!UNITY_EDITOR)
+        [SerializeField] private LayerMask _layerMask;
+    
+        private Camera _camera;
+
+        private int _fingerID = -1;
+
+        private void Awake()
+        {
+#if(!UNITY_EDITOR)
         {
             _fingerID = 0;
         }
-        #endif
-    }
+#endif
+        }
 
-    private void Start()
-    {
-        _camera = GetComponent<Camera>();
-    }
-
-    private void Update()
-    {
-        FindObjectUnderRay();
-    }
-
-    private void FindObjectUnderRay()
-    {
-        if (Input.GetMouseButtonDown(0))
+        private void Start()
         {
-            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            _camera = GetComponent<Camera>();
+        }
 
-            if (Physics.Raycast(ray, out hit, 100, _layerMask))
+        private void Update()
+        {
+            FindObjectUnderRay();
+        }
+
+        private void FindObjectUnderRay()
+        {
+            if (UnityEngine.Input.GetMouseButtonDown(0))
             {
-                if (hit.collider.gameObject.TryGetComponent(out IInteractable interactable) && !EventSystem.current.IsPointerOverGameObject(_fingerID))
+                Ray ray = _camera.ScreenPointToRay(UnityEngine.Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, 100, _layerMask))
                 {
-                    interactable.Interact();
+                    if (hit.collider.gameObject.TryGetComponent(out IInteractable interactable) && !EventSystem.current.IsPointerOverGameObject(_fingerID))
+                    {
+                        interactable.Interact();
+                    }
                 }
             }
         }

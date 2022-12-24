@@ -1,6 +1,8 @@
-using KasherOriginal.Factories.UIFactory;
+using Infrastructure.Factory.UIFactory;
+using Infrastructure.GlobalStateMachine.StateMachine;
+using UI.MainMenu;
 
-namespace KasherOriginal.GlobalStateMachine
+namespace Infrastructure.GlobalStateMachine.States
 {
     public class MainMenuState : State<GameInstance>
     {

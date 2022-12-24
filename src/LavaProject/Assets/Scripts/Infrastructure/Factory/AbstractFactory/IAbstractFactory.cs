@@ -1,6 +1,7 @@
+using Infrastructure.Factory.Model;
 using UnityEngine;
 
-namespace KasherOriginal.Factories.AbstractFactory
+namespace Infrastructure.Factory.AbstractFactory
 {
     public interface IAbstractFactory : IAbstractFactoryInfo, IFactory
     {

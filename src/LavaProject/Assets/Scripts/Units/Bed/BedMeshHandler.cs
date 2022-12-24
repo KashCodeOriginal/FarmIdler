@@ -1,46 +1,50 @@
-using Zenject;
+using Infrastructure.Factory.AbstractFactory;
+using Units.Plants;
 using UnityEngine;
-using KasherOriginal.Factories.AbstractFactory;
+using Zenject;
 
-public class BedMeshHandler : MonoBehaviour
+namespace Units.Bed
 {
-    [Inject]
-    public void Construct(IAbstractFactory abstractFactory)
+    public class BedMeshHandler : MonoBehaviour
     {
-        _abstractFactory = abstractFactory;
-    }
-
-    [SerializeField] private Transform _spawnPosition;
-
-    private GameObject _currentPlant;
-
-    private IAbstractFactory _abstractFactory;
-
-    public void SetBedMesh(BedCellStaticData bedCellStaticData)
-    {
-        if (bedCellStaticData == null)
+        [Inject]
+        public void Construct(IAbstractFactory abstractFactory)
         {
-            Destroy(_currentPlant);
-            return;
+            _abstractFactory = abstractFactory;
         }
-        
-        var plantPrefab = bedCellStaticData.Prefab;
 
-        if (plantPrefab != null)
+        [SerializeField] private Transform _spawnPosition;
+
+        private GameObject _currentPlant;
+
+        private IAbstractFactory _abstractFactory;
+
+        public void SetBedMesh(BedCellStaticData bedCellStaticData)
         {
-            _currentPlant = _abstractFactory.CreateInstance(plantPrefab, _spawnPosition.position);
+            if (bedCellStaticData == null)
+            {
+                Destroy(_currentPlant);
+                return;
+            }
         
-            _currentPlant.transform.SetParent(transform);
+            var plantPrefab = bedCellStaticData.Prefab;
+
+            if (plantPrefab != null)
+            {
+                _currentPlant = _abstractFactory.CreateInstance(plantPrefab, _spawnPosition.position);
+        
+                _currentPlant.transform.SetParent(transform);
             
-            SetGrowingTime(_currentPlant, bedCellStaticData.TimeBetweenGrowingStages);
+                SetGrowingTime(_currentPlant, bedCellStaticData.TimeBetweenGrowingStages);
+            }
         }
-    }
 
-    private void SetGrowingTime(GameObject plant, int time)
-    {
-        if (plant.TryGetComponent(out PlantsGrowing plantsGrowing))
+        private void SetGrowingTime(GameObject plant, int time)
         {
-            plantsGrowing.SetStageTime(time);
+            if (plant.TryGetComponent(out PlantsGrowing plantsGrowing))
+            {
+                plantsGrowing.SetStageTime(time);
+            }
         }
     }
 }

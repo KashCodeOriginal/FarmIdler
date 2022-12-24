@@ -1,7 +1,10 @@
 using UnityEngine.Events;
 
-public interface IInteractable
+namespace Units.Bed.Model
 {
-    public event UnityAction<Bed> IsBedInteracted;
-    public void Interact();
+    public interface IInteractable
+    {
+        public event UnityAction<Bed> IsBedInteracted;
+        public void Interact();
+    }
 }

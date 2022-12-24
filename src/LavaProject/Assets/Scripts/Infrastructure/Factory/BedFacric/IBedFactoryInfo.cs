@@ -1,7 +1,10 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
-public interface IBedFactoryInfo
+namespace Infrastructure.Factory.BedFacric
 {
-    public IReadOnlyList<GameObject> Instances { get; }
+    public interface IBedFactoryInfo
+    {
+        public IReadOnlyList<GameObject> Instances { get; }
+    }
 }

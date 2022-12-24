@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace KasherOriginal.GlobalStateMachine
+namespace Infrastructure.GlobalStateMachine.StateMachine
 {
     public class StateMachine<TContext>
     {

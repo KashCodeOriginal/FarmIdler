@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace KasherOriginal.Factories
+namespace Infrastructure.Factory.Model
 {
     public interface IFactory
     {
