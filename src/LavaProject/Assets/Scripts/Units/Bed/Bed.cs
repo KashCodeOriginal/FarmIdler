@@ -4,11 +4,11 @@ namespace Units.Bed
 {
     public class Bed : MonoBehaviour
     {
-        private BedCellStaticData _bedCellStaticSata;
+        private BedCellStaticData bedCellStaticData;
 
         private BedMeshHandler _bedMeshHandler;
 
-        public BedCellStaticData BedCellStaticSata => _bedCellStaticSata;
+        public BedCellStaticData BedCellStaticData => bedCellStaticData;
 
         private void Start()
         {
@@ -17,18 +17,18 @@ namespace Units.Bed
 
         public void SetBedType(BedCellStaticData bedCellStaticData)
         {
-            _bedCellStaticSata = bedCellStaticData;
+            this.bedCellStaticData = bedCellStaticData;
         }
 
         public void SetBedMesh()
         {
-            _bedMeshHandler.SetBedMesh(BedCellStaticSata);
+            _bedMeshHandler.SetBedMesh(BedCellStaticData);
         }
 
         public void ResetBedMesh()
         {
             SetBedType(null);
-            _bedMeshHandler.SetBedMesh(_bedCellStaticSata);
+            _bedMeshHandler.SetBedMesh(bedCellStaticData);
         }
     }
 }

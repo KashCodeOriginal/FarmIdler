@@ -34,7 +34,7 @@ namespace Infrastructure.GlobalStateMachine
                 new ProgressLoadingState(this, persistentProgressService, 
                     saveLoadService, 
                     saveLoadInstancesWatcher),
-                new GameplayState(this, uiFactory)
+                new GameplayState(this, uiFactory, persistentProgressService)
             );
         
             StateMachine.SwitchState<BootstrapState>();

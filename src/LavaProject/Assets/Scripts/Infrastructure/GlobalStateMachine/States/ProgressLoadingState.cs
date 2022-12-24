@@ -35,9 +35,24 @@ namespace Infrastructure.GlobalStateMachine.States
 
         private void LoadProgressOrInitNew()
         {
-            _persistentProgressService.SetProgress(_saveLoadService.LoadProgress() ?? new PlayerProgress());
+            _persistentProgressService.SetProgress(_saveLoadService.LoadProgress() ?? InitNewProgress());
         }
 
+        private PlayerProgress InitNewProgress()
+        {
+            var progress = new PlayerProgress()
+            {
+                PlayerData =
+                {
+                    Experience = 0,
+                    Level = 0,
+                    MaxExperienceForLevel = 100
+                }
+            };
+
+            return progress;
+        }
+        
         private void InformProgressReaders()
         {
             foreach (var progressLoadable in _saveLoadInstancesWatcher.ProgressLoadable)

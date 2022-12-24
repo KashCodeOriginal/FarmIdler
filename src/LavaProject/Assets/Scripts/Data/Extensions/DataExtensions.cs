@@ -12,8 +12,6 @@ namespace Data.Extensions
         
         public static Vector3 AsVector3(this Vector3Data vector)
         {
-            Debug.Log(vector);
-            
             return new Vector3(vector.X, vector.Y, vector.Z);
         }
         

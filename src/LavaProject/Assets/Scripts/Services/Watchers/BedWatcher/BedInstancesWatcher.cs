@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Infrastructure.Factory.BedFacric;
 using Infrastructure.Factory.UIFactory;
+using Services.PersistentProgress;
 using UI.PlantChoose;
 using UI.PlantInfo;
 using Units.Bed;
@@ -15,16 +16,18 @@ namespace Services.Watchers
 {
     public class BedInstancesWatcher : IBedInstancesWatcher
     {
-        public BedInstancesWatcher(IBedFactory bedFactory, IUIFactory uiFactory)
+        public BedInstancesWatcher(IBedFactory bedFactory, IUIFactory uiFactory, IPersistentProgressService persistentProgressService)
         {
             _bedFactory = bedFactory;
             _uiFactory = uiFactory;
+            _persistentProgressService = persistentProgressService;
         }
 
         public event UnityAction<Bed> IsBedModified;
 
         private readonly IBedFactory _bedFactory;
         private readonly IUIFactory _uiFactory;
+        private readonly IPersistentProgressService _persistentProgressService;
 
         private List<GameObject> _instances = new List<GameObject>();
 
@@ -59,7 +62,7 @@ namespace Services.Watchers
 
         private void BedWasInteracted(Bed bed)
         {
-            BedCellStaticData bedCellStaticData = bed.BedCellStaticSata;
+            BedCellStaticData bedCellStaticData = bed.BedCellStaticData;
         
             if (bedCellStaticData == null)
             {
@@ -119,17 +122,11 @@ namespace Services.Watchers
 
             void PlantWasCollected()
             {
-                if (_playerInstance.TryGetComponent(out FarmerExperience farmerExperience))
-                {
-                    farmerExperience.AddExperience(bedCellStaticData.Experience);
-                }
+                _persistentProgressService.PlayerProgress.PlayerData.AddExperience(bedCellStaticData.Experience);
 
                 if (bedCellStaticData.IsCollectable)
                 {
-                    if (_playerInstance.TryGetComponent(out FarmerInventory farmerInventory))
-                    {
-                        farmerInventory.AddCarrot(Random.Range(1, 3));
-                    }
+                    _persistentProgressService.PlayerProgress.LootData.Collect(Random.Range(1, 3));
                 }
             
                 bed.ResetBedMesh();

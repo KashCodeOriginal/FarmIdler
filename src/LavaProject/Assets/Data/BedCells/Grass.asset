@@ -16,6 +16,6 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: 87a0c6dde8047c040a49174acffbef2f, type: 3}
   _prefab: {fileID: 1936086201447935149, guid: cb63897470c8c4d409f9772710a8c52f, type: 3}
   _experience: 60
-  _timeBetweenGrowingStages: 10
+  _timeBetweenGrowingStages: 6
   _isExperienceGivable: 1
   _isCollectable: 0

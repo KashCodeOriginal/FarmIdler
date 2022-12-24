@@ -1,19 +1,21 @@
 using Infrastructure.Factory.UIFactory;
 using Infrastructure.GlobalStateMachine.StateMachine;
+using Services.PersistentProgress;
 using UI.GameplayScreen;
-using Units.Farmer;
 using UnityEngine;
 
 namespace Infrastructure.GlobalStateMachine.States
 {
     public class GameplayState : StateOneParam<GameInstance, GameObject>
     {
-        public GameplayState(GameInstance context, IUIFactory uiFactory) : base(context)
+        public GameplayState(GameInstance context, IUIFactory uiFactory, IPersistentProgressService persistentProgressService) : base(context)
         {
             _uiFactory = uiFactory;
+            _persistentProgressService = persistentProgressService;
         }
 
         private readonly IUIFactory _uiFactory;
+        private readonly IPersistentProgressService _persistentProgressService;
         private GameObject _gameplayScreenInstance;
 
         public override async void Enter(GameObject farmerInstance)
@@ -22,9 +24,7 @@ namespace Infrastructure.GlobalStateMachine.States
 
             if (_gameplayScreenInstance.TryGetComponent(out GameplayScreen gameplayScreen))
             {
-                var farmerExperience = farmerInstance.GetComponent<FarmerExperience>();
-                var farmerInventory = farmerInstance.GetComponent<FarmerInventory>();
-                gameplayScreen.SetUp(farmerExperience, farmerInventory);
+                gameplayScreen.SetUp(_persistentProgressService);
             }
 
             _uiFactory.DestroyMenuLoadingScreen();
