@@ -1,6 +1,6 @@
 using System;
 
-namespace Data.Dynamic
+namespace Data.Dynamic.PlayerData
 {
     [Serializable]
     public class Vector3Data

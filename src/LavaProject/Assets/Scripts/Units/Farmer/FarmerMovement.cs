@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Data.Dynamic;
+using Data.Dynamic.PlayerData;
 using Data.Extensions;
 using Data.Settings;
 using Pathfinding;
@@ -17,9 +19,9 @@ namespace Units.Farmer
     public class FarmerMovement : MonoBehaviour, IMovable, IProgressSavable, IProgressLoadable
     {
         [Inject]
-        public void Construct(IBedInstancesWatcher bedInstancesWatcher, GameSettings gameSettings, ISaveLoadService saveLoadService)
+        public void Construct(IBedInteractInstancesWatcher bedInteractInstancesWatcher, GameSettings gameSettings, ISaveLoadService saveLoadService)
         {
-            _bedInstancesWatcher = bedInstancesWatcher;
+            _bedInteractInstancesWatcher = bedInteractInstancesWatcher;
             _gameSettings = gameSettings;
             _saveLoadService = saveLoadService;
         }
@@ -32,7 +34,7 @@ namespace Units.Farmer
 
         private Vector3 _homePosition;
 
-        private IBedInstancesWatcher _bedInstancesWatcher;
+        private IBedInteractInstancesWatcher _bedInteractInstancesWatcher;
         private ISaveLoadService _saveLoadService;
 
         private GameObject _positionTarget;
@@ -57,7 +59,7 @@ namespace Units.Farmer
                 name = "FarmerTarget"
             };
 
-            _bedInstancesWatcher.IsBedModified += BedWasModified;
+            _bedInteractInstancesWatcher.IsBedModified += BedInteractWasModified;
 
             _homePosition = _gameSettings.PlayerSpawnPosition;
         }
@@ -76,20 +78,23 @@ namespace Units.Farmer
         
             if (_targets.Count > 0)
             {
-                _currentTarget = _targets[0];
-            
-                _positionTarget.transform.position = _currentTarget.position;
-            
+                _currentTarget = _targets.FirstOrDefault();
+
+                if (_currentTarget != null)
+                {
+                    _positionTarget.transform.position = _currentTarget.position;
+                }
+
                 aiDestinationSetter.target = _positionTarget.transform;
             }
         
             if (Vector3.Distance(gameObject.transform.position, _positionTarget.transform.position) < _reachedPointDistance)
             {
-                IsBedVisited?.Invoke(_targets[0].gameObject);
+                IsBedVisited?.Invoke(_targets.FirstOrDefault()?.gameObject);
             
                 IsTargetReached = true;
 
-                _targets.Remove(_targets[0]);
+                _targets.Remove(_targets.FirstOrDefault());
 
                 _currentTarget = null;
             }
@@ -115,14 +120,14 @@ namespace Units.Farmer
             _targets.Add(point);
         }
 
-        private void BedWasModified(Bed.Bed bed)
+        private void BedInteractWasModified(Bed.Bed bed)
         {
             AddMovingPoint(bed.transform);
         }
 
         private void OnDisable()
         {
-            _bedInstancesWatcher.IsBedModified -= BedWasModified;
+            _bedInteractInstancesWatcher.IsBedModified -= BedInteractWasModified;
         }
 
         public void UpdateProgress(PlayerProgress playerProgress)

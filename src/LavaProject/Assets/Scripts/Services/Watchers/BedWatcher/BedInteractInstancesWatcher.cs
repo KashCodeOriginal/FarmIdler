@@ -5,7 +5,6 @@ using Services.PersistentProgress;
 using UI.PlantChoose;
 using UI.PlantInfo;
 using Units.Bed;
-using Units.Farmer;
 using Units.Farmer.Model;
 using Units.Plants;
 using UnityEngine;
@@ -14,9 +13,11 @@ using Random = UnityEngine.Random;
 
 namespace Services.Watchers
 {
-    public class BedInstancesWatcher : IBedInstancesWatcher
+    public class BedInteractInstancesWatcher : IBedInteractInstancesWatcher
     {
-        public BedInstancesWatcher(IBedFactory bedFactory, IUIFactory uiFactory, IPersistentProgressService persistentProgressService)
+        public BedInteractInstancesWatcher(IBedFactory bedFactory,
+            IUIFactory uiFactory,
+            IPersistentProgressService persistentProgressService)
         {
             _bedFactory = bedFactory;
             _uiFactory = uiFactory;

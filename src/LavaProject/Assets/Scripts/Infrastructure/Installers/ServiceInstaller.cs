@@ -52,7 +52,7 @@ namespace Infrastructure.Installers
     
         private void BindBedInstanceWatcher()
         {
-            Container.BindInterfacesTo<BedInstancesWatcher>().AsSingle();
+            Container.BindInterfacesTo<BedInteractInstancesWatcher>().AsSingle();
         }
     
         private void BindSettings()

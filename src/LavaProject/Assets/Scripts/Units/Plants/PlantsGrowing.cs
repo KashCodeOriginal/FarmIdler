@@ -23,10 +23,14 @@ namespace Units.Plants
     
         public bool WasPlantGrown => _wasPlantGrown;
 
+        public int CurrentStage => _currentStage;
+
+        public float CurrentStageTime => _currentStageTime;
+
         private void Start()
         {
             _wasPlantGrown = false;
-            SetStage(_currentStage);
+            SetStage(CurrentStage);
         }
 
         public void SetStageTime(int time)
@@ -50,15 +54,15 @@ namespace Units.Plants
         {
             if (_canGrow)
             {
-                if (_currentStage < _stages.Count - 1)
+                if (CurrentStage < _stages.Count - 1)
                 {
-                    _currentStageTime += Time.deltaTime;
+                    _currentStageTime = CurrentStageTime + Time.deltaTime;
 
-                    if (_currentStageTime >= _timeBetweenStages)
+                    if (CurrentStageTime >= _timeBetweenStages)
                     {
                         _currentStageTime = 0;
-                        _currentStage++;
-                        SetStage(_currentStage);
+                        _currentStage = CurrentStage + 1;
+                        SetStage(CurrentStage);
                     }
                 }
                 else

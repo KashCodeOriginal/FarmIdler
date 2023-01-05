@@ -16,20 +16,20 @@ namespace Infrastructure.GlobalStateMachine.States
             IAbstractFactory abstractFactory, 
             IAssetsAddressableService assetsAddressableService, 
             GameSettings gameSettings, 
-            IBedInstancesWatcher bedInstancesWatcher,
+            IBedInteractInstancesWatcher bedInteractInstancesWatcher,
             ISaveLoadInstancesWatcher saveLoadInstancesWatcher) : base(context)
         {
             _abstractFactory = abstractFactory;
             _assetsAddressableService = assetsAddressableService;
             _gameSettings = gameSettings;
-            _bedInstancesWatcher = bedInstancesWatcher;
+            _bedInteractInstancesWatcher = bedInteractInstancesWatcher;
             _saveLoadInstancesWatcher = saveLoadInstancesWatcher;
         }
 
         private readonly IAbstractFactory _abstractFactory;
         private readonly IAssetsAddressableService _assetsAddressableService;
         private readonly GameSettings _gameSettings;
-        private readonly IBedInstancesWatcher _bedInstancesWatcher;
+        private readonly IBedInteractInstancesWatcher _bedInteractInstancesWatcher;
         private readonly ISaveLoadInstancesWatcher _saveLoadInstancesWatcher;
 
         public override async void Enter(MainMenuScreen mainMenuScreen)
@@ -49,12 +49,12 @@ namespace Infrastructure.GlobalStateMachine.States
             var pathfindingInstance = _abstractFactory.CreateInstance(pathfindingPrefab,  _gameSettings.BaseMapPosition);
 
             cameraInstance.transform.rotation = _gameSettings.CameraInstanceRotation;
-            _bedInstancesWatcher.SetUp(farmerInstance);
+            _bedInteractInstancesWatcher.SetUp(farmerInstance);
 
             if (bedSpawnerInstance.TryGetComponent(out BedSpawner.BedSpawner bedSpawner))
             {
                 bedSpawner.SetUp(mainMenuScreen);
-                bedSpawner.CreateBeds();
+                bedSpawner.CreateRandomBeds();
             }
             
             _saveLoadInstancesWatcher.RegisterProgress(farmerInstance);

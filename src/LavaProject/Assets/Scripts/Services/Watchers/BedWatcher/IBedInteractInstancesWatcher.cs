@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace Services.Watchers
 {
-    public interface IBedInstancesWatcher
+    public interface IBedInteractInstancesWatcher
     {
         public event UnityAction<Bed> IsBedModified; 
         public IReadOnlyList<GameObject> Instances { get; }

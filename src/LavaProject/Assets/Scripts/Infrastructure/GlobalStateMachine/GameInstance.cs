@@ -17,7 +17,7 @@ namespace Infrastructure.GlobalStateMachine
             IAssetsAddressableService assetsAddressableService, 
             IAbstractFactory abstractFactory, 
             GameSettings gameSettings, 
-            IBedInstancesWatcher bedInstancesWatcher,
+            IBedInteractInstancesWatcher bedInteractInstancesWatcher,
             ISaveLoadInstancesWatcher saveLoadInstancesWatcher,
             IPersistentProgressService persistentProgressService,
             ISaveLoadService saveLoadService)
@@ -29,7 +29,7 @@ namespace Infrastructure.GlobalStateMachine
                 new GameSetUpState(this, abstractFactory,
                     assetsAddressableService,
                     gameSettings,
-                    bedInstancesWatcher,
+                    bedInteractInstancesWatcher,
                     saveLoadInstancesWatcher),
                 new ProgressLoadingState(this, persistentProgressService, 
                     saveLoadService, 

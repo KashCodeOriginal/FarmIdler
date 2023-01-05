@@ -9,10 +9,10 @@ namespace BedSpawner
     public class BedSpawner : MonoBehaviour
     {
         [Inject]
-        public void Construct(IBedFactory bedFactory, IBedInstancesWatcher bedInstancesWatcher)
+        public void Construct(IBedFactory bedFactory, IBedInteractInstancesWatcher bedInteractInstancesWatcher)
         {
             _bedFactory = bedFactory;
-            _bedInstancesWatcher = bedInstancesWatcher;
+            _bedInteractInstancesWatcher = bedInteractInstancesWatcher;
         }
     
         private float _mapHeight = 0.3f;
@@ -22,7 +22,7 @@ namespace BedSpawner
         private Vector3 _centerPosition;
 
         private IBedFactory _bedFactory;
-        private IBedInstancesWatcher _bedInstancesWatcher;
+        private IBedInteractInstancesWatcher _bedInteractInstancesWatcher;
 
         private MainMenuScreen _mainMenuScreen;
 
@@ -31,7 +31,7 @@ namespace BedSpawner
             _mainMenuScreen = mainMenuScreen;
         }
 
-        public async void CreateBeds()
+        public async void CreateRandomBeds()
         {
             _centerPosition = new Vector3(_mainMenuScreen.RowsValue * -2.2f, _mapHeight, _mainMenuScreen.ColumnsValue * -2.8f);
         
@@ -45,7 +45,7 @@ namespace BedSpawner
 
                     var instance = await _bedFactory.CreateInstance(targetSpawnPosition);
                 
-                    _bedInstancesWatcher.Register(instance);
+                    _bedInteractInstancesWatcher.Register(instance);
                 }
             }
         
